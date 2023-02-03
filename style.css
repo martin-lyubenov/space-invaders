@@ -1,0 +1,323 @@
+@font-face { 
+    font-family: bits;
+    src: url(/fonts/Quinquefive-K7qep.ttf);
+}
+
+:root { 
+    --green: 51,255,1,255;
+}
+
+body { 
+    margin: 0;
+    padding: 0;
+    font-family: bits;
+    color: white;
+}
+
+.flex { 
+    display: flex;
+}
+
+.hidden { 
+    display: none;
+}
+
+.center { 
+    margin: auto;
+    width: 50%;
+    padding: 10px; 
+}
+
+.game-section { 
+   background-color: black;
+}
+
+.game-area { 
+    position: relative;
+    background-color: black;
+    width: 90%;
+    height: 90vh;
+    padding: 0 5%;
+    border-bottom: 5px solid rgba(var(--green));
+}
+
+.start-game { 
+    position: absolute;
+    width: 60%;
+    flex-direction: column;
+    justify-content: space-around;
+    left: 15%;
+    top: 15%;
+    z-index: 3;
+}
+
+.main-header { 
+    text-align: center;
+    width: 25%;
+}
+
+.start-game-points { 
+    list-style: none;
+    line-height: 4rem;
+    text-align: center;
+    padding: 0;
+}
+
+.start-game-points>ul { 
+    padding: 0;
+}
+
+.ten-pts { 
+    width: 45px;
+    vertical-align: middle;
+}
+
+.twenty-pts { 
+    width: 50px;
+    vertical-align: middle;
+    padding-right: 15px;
+}
+
+.fourty-pts { 
+    width: 50px;
+    vertical-align: middle;
+}
+
+.mothership-pts { 
+    width: 65px;
+    vertical-align: middle;
+}
+
+.start-button { 
+    width: 40%;
+    border-radius: 30px;
+    background-color: rgb(var(--green));
+    padding: 30px;
+    text-align: center;
+}
+
+.controls-center { 
+    padding-top: 25px;
+    text-align: center;
+}
+
+.controls { 
+    width: 10%;
+    align-items: center;
+}
+
+
+.start-button:hover { 
+    cursor: pointer;
+    color: rgba(var(--green));
+    background-color: white;
+}
+
+.game-over { 
+    position: absolute;
+    width: 30%;
+    z-index: 3;
+    border-radius: 30px;
+    background-color: red;
+    left: 35%;
+    top: 15%;
+    padding: 30px;
+    text-align: center;
+}
+
+
+.game-over:hover { 
+    cursor: pointer;
+    color: red;
+    background-color: white;
+}
+
+.score-screen { 
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 5%;
+    line-height: 4em;
+}
+
+.green { 
+    color: rgba(51,255,1,255);
+}
+
+.lives, .lives-counter { 
+    display: flex;
+    justify-content: space-between;
+    gap: 5%;
+}
+
+
+.one-live { 
+    width: 75px;
+    height: 35px;
+    background-image: url(/images/defender/defender.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: auto;
+    background-position: center;
+}
+
+.defender { 
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-image: url(/images/defender/defender.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.lazer-shot {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url(/images/defender/attack-lazer.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.alien-lazer-shot { 
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url(/images/aliens/attack-type-1.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: 1;
+}
+
+.alien-cluster { 
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(11, 65px);
+    grid-template-rows: repeat(5, 55px);
+    margin-top: 4%;
+}
+
+.alien { 
+    width: 60px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 2;
+}
+
+.alien-40pts { 
+    background-image: url(/images/aliens/enemy-40pts-1.png);
+}
+
+.alien-20pts { 
+    background-image: url(/images/aliens/enemy-20pts-1.png);
+}
+
+.alien-10pts { 
+    background-image: url(/images/aliens/enemy-10pts-1.png);
+}
+
+.mothership { 
+       position: absolute;
+       width: 60px;
+       height: 50px;
+       background-image: url(/images/aliens/mothership.jpg);
+}
+
+.shield-field { 
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+}
+
+.shield { 
+    width: 150px;
+    height: 75px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: 2;
+}
+
+.shield-full-hp { 
+    background-image: url(/images/shield/shield-full-hp.png);
+}
+
+.shield-1hit { 
+    background-image: url(/images/shield/shield-full-1hit.png);
+}
+
+.shield-2hits { 
+    background-image: url(/images/shield/shield-full-2hits.png);
+}
+
+.shield-3hits { 
+    background-image: url(/images/shield/shield-full-3hits.png);
+}
+
+.shield-destroyed { 
+    background-image: url(/images/shield/shield-destroyed.jpg);
+}
+
+.dying-animation { 
+    background-image: url(/images/aliens/death-animation.jpg);
+}
+
+.dead-alien { 
+    z-index: -100;
+    background-color: black;
+}
+
+@media (max-width: 1600px) { 
+
+    .game-area { 
+        width: 90%;
+        height: 87vh;
+    }
+
+    .one-live { 
+        width: 50px;
+        height: 25px;
+    }
+    
+    .defender { 
+        width: 75px;
+        height: 35px;
+    }
+    
+    .lazer-shot {
+        width: 15px;
+        height: 20px;
+    }
+    
+    .alien-lazer-shot { 
+        width: 20px;
+        height: 20px;
+    }
+    
+    .alien-cluster { 
+        grid-template-columns: repeat(11, 45px);
+        grid-template-rows: repeat(5, 45px);
+    }
+    
+    .alien { 
+        width: 60px;
+        height: 30px;
+    }
+
+    .shield { 
+        width: 100px;
+        height: 50px;
+    }
+    
+    
+    .mothership { 
+           width: 60px;
+           height: 30px;
+    }
+} 
+
+

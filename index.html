@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/logic/main.js" type="module" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Space Invaders</title>
+</head>
+<body>
+
+    <div class="game-section">
+        <div class="start-game flex">
+            <h1 class="main-header center">Space <span class="green">Invaders</span></h1>
+            <div class="start-game-info center">
+                <ul>
+                    <li class="start-game-points"><img src="/images/aliens/enemy-10pts-1.png" alt="" class="ten-pts"> = 10 pts</li>
+                    <li class="start-game-points"><img src="/images/aliens/enemy-20pts-1.png" alt="" class="twenty-pts">= 20 pts</li>
+                    <li class="start-game-points "><img src="/images/aliens/enemy-40pts-1.png" alt="" class="fourty-pts"> = 40 pts</li>
+                    <li class="start-game-points "><img src="/images/aliens/mothership.jpg" alt="" class="mothership-pts"> = ??? pts</li>
+                </ul>
+            </div>
+            <p class="start-button center">Start Game!</p>
+           
+                <div class="controls-center">
+                    <img src="/images/controls/pngfind.com-spacebar-png-4008499.png" alt="" class="controls"><img src="/images/controls/arrow-controls.png" alt="" class="controls">
+                </div>
+          
+        </div>
+        <div class="score-screen">
+            <div class="score">Score<span class="points green center">0</span></div>
+            <div class="lives"><span class="center">LIVES</span>  <div class="lives-counter"></div> </div>
+        </div>
+        <div class="game-area"></div>
+        <div class="game-over hidden">Game Over!</div>
+    </div>
+    
+</body>
+</html>
