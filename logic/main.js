@@ -7,11 +7,11 @@ const points = document.querySelector('.points');
 const lives = document.querySelector('.lives-counter');
 
 // sounds
-const defenderShooting = new Audio('/sounds/shoot.wav');
-const alienDeathSound = new Audio('/sounds/invaderkilled.wav');
-const backgroundMusic = new Audio('/sounds/spaceinvaders1.mpeg');
-const mothershipSoundHighPitch = new Audio('/sounds/ufo_highpitch.wav');
-const mothershipSoundLowPitch = new Audio('/sounds/ufo_lowpitch.wav');
+const defenderShooting = new Audio('./sounds/shoot.wav');
+const alienDeathSound = new Audio('./sounds/invaderkilled.wav');
+const backgroundMusic = new Audio('./sounds/spaceinvaders1.mpeg');
+const mothershipSoundHighPitch = new Audio('./sounds/ufo_highpitch.wav');
+const mothershipSoundLowPitch = new Audio('./sounds/ufo_lowpitch.wav');
 let mothershipCurrentSound;
 
 
@@ -176,7 +176,7 @@ function gameAction(timestamp) {
     aliens.forEach(alien => { 
         lazerShots.forEach(lazerShot => {
             if (isCollision(lazerShot, alien) && alien.classList.contains('dead-alien') === false) {
-                alien.style.backgroundImage = "url('/images/aliens/death-animation.jpg')";
+                alien.style.backgroundImage = "url('./images/aliens/death-animation.jpg')";
                 setTimeout( () => {
                 alien.classList.add('dead-alien')
                 },50)
@@ -209,31 +209,31 @@ function gameAction(timestamp) {
         aliens.forEach(alien => { 
             if (alien.classList.contains('alien-40pts')) {
                     if (alien.style.backgroundImage.includes('-40pts-1')) {
-                        alien.style.backgroundImage = "url('/images/aliens/enemy-40pts-2.png')";
+                        alien.style.backgroundImage = "url('./images/aliens/enemy-40pts-2.png')";
                     } else if(alien.style.backgroundImage.includes('-40pts-2')) { 
-                        alien.style.backgroundImage = "url('/images/aliens/enemy-40pts-1.png')";
+                        alien.style.backgroundImage = "url('./images/aliens/enemy-40pts-1.png')";
                     } else { 
-                        alien.style.backgroundImage = "url('/images/aliens/enemy-40pts-2.png')";
+                        alien.style.backgroundImage = "url('./images/aliens/enemy-40pts-2.png')";
                     }
             } 
           
             if (alien.classList.contains('alien-20pts')) {
                 if (alien.style.backgroundImage.includes('-20pts-1')) {
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-20pts-2.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-20pts-2.png')";
                 } else if(alien.style.backgroundImage.includes('-20pts-2')) { 
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-20pts-1.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-20pts-1.png')";
                 } else { 
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-20pts-2.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-20pts-2.png')";
                 }
             } 
             
             if (alien.classList.contains('alien-10pts')) {  
                 if (alien.style.backgroundImage.includes('-10pts-1')) {
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-10pts-2.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-10pts-2.png')";
                 } else if(alien.style.backgroundImage.includes('-10pts-2')) { 
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-10pts-1.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-10pts-1.png')";
                 } else { 
-                    alien.style.backgroundImage = "url('/images/aliens/enemy-10pts-2.png')";
+                    alien.style.backgroundImage = "url('./images/aliens/enemy-10pts-2.png')";
                 }
             } 
 
@@ -257,11 +257,11 @@ function gameAction(timestamp) {
                 if (timestamp - scene.lastAlienLazerShotSpriteInterval > game.alienLazerShotSpriteChangeInterval) {
 
                     if (alienLazerShot.style.backgroundImage.includes('type-1')) {
-                        alienLazerShot.style.backgroundImage = "url('/images/aliens/attack-type-2.png')";
+                        alienLazerShot.style.backgroundImage = "url('./images/aliens/attack-type-2.png')";
                     }else if(alienLazerShot.style.backgroundImage.includes('type-2')) { 
-                        alienLazerShot.style.backgroundImage = "url('/images/aliens/attack-type-1.png')";
+                        alienLazerShot.style.backgroundImage = "url('./images/aliens/attack-type-1.png')";
                     }else { 
-                        alienLazerShot.style.backgroundImage = "url('/images/aliens/attack-type-2.png')";
+                        alienLazerShot.style.backgroundImage = "url('./images/aliens/attack-type-2.png')";
                     }
 
                     scene.lastAlienLazerShotSpriteInterval = timestamp;

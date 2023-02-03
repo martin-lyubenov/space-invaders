@@ -154,7 +154,7 @@ body {
 .one-live { 
     width: 75px;
     height: 35px;
-    background-image: url(/images/defender/defender.jpg);
+    background-image: url(./images/defender/defender.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     margin: auto;
@@ -165,7 +165,7 @@ body {
     position: absolute;
     width: 100px;
     height: 50px;
-    background-image: url(/images/defender/defender.jpg);
+    background-image: url(./images/defender/defender.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -175,7 +175,7 @@ body {
     position: absolute;
     width: 25px;
     height: 25px;
-    background-image: url(/images/defender/attack-lazer.jpg);
+    background-image: url(./images/defender/attack-lazer.jpg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -185,7 +185,7 @@ body {
     position: absolute;
     width: 25px;
     height: 25px;
-    background-image: url(/images/aliens/attack-type-1.png);
+    background-image: url(./images/aliens/attack-type-1.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -209,22 +209,22 @@ body {
 }
 
 .alien-40pts { 
-    background-image: url(/images/aliens/enemy-40pts-1.png);
+    background-image: url(./images/aliens/enemy-40pts-1.png);
 }
 
 .alien-20pts { 
-    background-image: url(/images/aliens/enemy-20pts-1.png);
+    background-image: url(./images/aliens/enemy-20pts-1.png);
 }
 
 .alien-10pts { 
-    background-image: url(/images/aliens/enemy-10pts-1.png);
+    background-image: url(./images/aliens/enemy-10pts-1.png);
 }
 
 .mothership { 
        position: absolute;
        width: 60px;
        height: 50px;
-       background-image: url(/images/aliens/mothership.jpg);
+       background-image: url(./images/aliens/mothership.jpg);
 }
 
 .shield-field { 
@@ -243,27 +243,27 @@ body {
 }
 
 .shield-full-hp { 
-    background-image: url(/images/shield/shield-full-hp.png);
+    background-image: url(./images/shield/shield-full-hp.png);
 }
 
 .shield-1hit { 
-    background-image: url(/images/shield/shield-full-1hit.png);
+    background-image: url(./images/shield/shield-full-1hit.png);
 }
 
 .shield-2hits { 
-    background-image: url(/images/shield/shield-full-2hits.png);
+    background-image: url(./images/shield/shield-full-2hits.png);
 }
 
 .shield-3hits { 
-    background-image: url(/images/shield/shield-full-3hits.png);
+    background-image: url(./images/shield/shield-full-3hits.png);
 }
 
 .shield-destroyed { 
-    background-image: url(/images/shield/shield-destroyed.jpg);
+    background-image: url(./images/shield/shield-destroyed.jpg);
 }
 
 .dying-animation { 
-    background-image: url(/images/aliens/death-animation.jpg);
+    background-image: url(./images/aliens/death-animation.jpg);
 }
 
 .dead-alien { 
