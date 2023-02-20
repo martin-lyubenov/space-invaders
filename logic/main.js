@@ -1,62 +1,28 @@
-const startGame = document.querySelector('.start-game');
+import { LazerShotMaker } from "./lazerShots.js";
+import { sounds } from "./sounds.js";
+import { onGameStart, gameOverAction, gameRestart, isCollision,  } from "./utilityFuncs.js";
+
+export const startGame = document.querySelector('.start-game');
 const startButton = document.querySelector('.start-button')
 const scoreScreen = document.querySelector('.score-screen');
-let gameArea = document.querySelector('.game-area');
-const gameOver = document.querySelector('.game-over');
+export let gameArea = document.querySelector('.game-area');
+export const gameOver = document.querySelector('.game-over');
 const points = document.querySelector('.points');
-const lives = document.querySelector('.lives-counter');
+// const lives = document.querySelector('.lives-counter');
 
-// sounds
-const defenderShooting = new Audio('./sounds/shoot.wav');
-const alienDeathSound = new Audio('./sounds/invaderkilled.wav');
-const backgroundMusic = new Audio('./sounds/spaceinvaders1.mpeg');
-const mothershipSoundHighPitch = new Audio('./sounds/ufo_highpitch.wav');
-const mothershipSoundLowPitch = new Audio('./sounds/ufo_lowpitch.wav');
 let mothershipCurrentSound;
 
-
 // backgournd music loop
-backgroundMusic.addEventListener('ended', function() {
+sounds.backgroundMusic.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
 });
-
-
 
 // start game button event listener
 startButton.addEventListener('click', onGameStart);
 
 // game over and restart game event listener
 gameOver.addEventListener('click', gameRestart);
-
-// starting game
-function onGameStart() {
-    startGame.classList.add('hidden');
-
-    const defender = document.createElement('div');
-    defender.classList.add('defender');
-    defender.style.left = player.x + 'px';
-    defender.style.top = player.y + 'px';
-    gameArea.appendChild(defender);
-
-    player.height = defender.offsetHeight;
-    player.width = defender.offsetWidth;
-
-    addAliens(0);
-    addShields();
-    backgroundMusic.play();
-
-    let lives = document.querySelector('.lives-counter');
-    for(let i = 0; i < 3; i++) { 
-        let live = document.createElement('div');
-        live.classList.add('one-live');
-        lives.appendChild(live);
-    }
-
-    window.requestAnimationFrame(gameAction);
-
-}
-
 
 // player movement 
 document.addEventListener('keydown', onKeyDown);
@@ -72,7 +38,7 @@ function onKeyUp(e) {
    
 }
 
-let player = {
+export let player = {
     x: 100,
     y: gameArea.offsetHeight - 50,
     width: 0,
@@ -83,7 +49,7 @@ let player = {
 }
 
 // general game info
-let game = { 
+export let game = { 
     speed: 2,
     playerMovementMultiplier: 2,
     lazerShotMovementMultiplier: 3,
@@ -100,7 +66,7 @@ let game = {
 
 }
 
-let scene = { 
+export let scene = { 
     score: 0,
     lastAlienSpriteInterval:0,
     lastAlienLazerShotSpriteInterval: 0,
@@ -110,9 +76,8 @@ let scene = {
 }
 
 
-
 // game engine
-function gameAction(timestamp) { 
+export function gameAction(timestamp) { 
 
     const defender = document.querySelector('.defender');
 
@@ -132,8 +97,9 @@ function gameAction(timestamp) {
 
     // shooting
     if (keys.Space && timestamp - player.lastTimeShot > game.fireInterval) {
-        addDefenderLazerShot(player);
-        defenderShooting.play()
+        
+        LazerShotMaker.addDefenderLazerShot(player);
+        sounds.defenderShooting.play();
         player.lastTimeShot = timestamp;
 
         
@@ -181,7 +147,7 @@ function gameAction(timestamp) {
                 alien.classList.add('dead-alien')
                 },50)
                 lazerShot.remove();
-                alienDeathSound.play();
+                sounds.alienDeathSound.play();
                 if (alien.classList.contains('alien-40pts')) {
                     scene.score+= 40;
                 } else if (alien.classList.contains('alien-20pts')) { 
@@ -245,7 +211,7 @@ function gameAction(timestamp) {
         let remainingAliens = Array.from(aliens).filter(alien => alien.classList.contains('dead-alien') === false);
         let randomAlienPosition = Math.round(remainingAliens.length * Math.random());
         if (timestamp - scene.lastAlienLazerShot > game.alienFireInterval) { 
-                    addAlienLazerShot(remainingAliens[randomAlienPosition]);
+                    LazerShotMaker.addAlienLazerShot(remainingAliens[randomAlienPosition]);
                     scene.lastAlienLazerShot = timestamp;
                 }
 
@@ -308,11 +274,6 @@ function gameAction(timestamp) {
                 })
             })
 
-
-
-
-            
-
         // add mothership
         if (timestamp - scene.lastSpawnMothership > game.mothershipSpawnInterval + 50000 * Math.random()) {
             let mothership = document.createElement('div');
@@ -321,9 +282,9 @@ function gameAction(timestamp) {
             mothership.style.left = mothership.x + 'px';
             mothership.style.top = 0 + 'px';
             if (Math.round(Math.random()) === 0) {
-                mothershipCurrentSound = mothershipSoundHighPitch;
+                mothershipCurrentSound = sounds.mothershipSoundHighPitch;
             } else { 
-                mothershipCurrentSound = mothershipSoundLowPitch;
+                mothershipCurrentSound = sounds.mothershipSoundLowPitch;
             }
             gameArea.appendChild(mothership);
     
@@ -359,136 +320,7 @@ function gameAction(timestamp) {
     if (scene.isActive) {
         window.requestAnimationFrame(gameAction);
     }
-    
 }
-
-
-// add lazer shot
-function addDefenderLazerShot(player) {
-    let lazerShot = document.createElement('div');
-    lazerShot.classList.add('lazer-shot');
-    lazerShot.y = player.y - player.height -25;
-    lazerShot.style.top =  lazerShot.y + 'px';
-
-    lazerShot.style.left = (player.x + player.width / 2 - 12) + 'px';
-
-    
-    gameArea.appendChild(lazerShot);
-}
-
-// add enemy lazer shot
-function addAlienLazerShot(alien) {
-
-    if (alien === undefined) {
-        return;
-    }
-
-    let alienLazerShot = document.createElement('div');
-    alienLazerShot.classList.add('alien-lazer-shot');
-    alienLazerShot.y = alien.getBoundingClientRect().y;
-    alienLazerShot.style.top =  alienLazerShot.y + 'px';
-
-    alienLazerShot.style.left = (alien.getBoundingClientRect().x + alien.offsetWidth / 2 - 12) + 'px';
-
-    
-    gameArea.appendChild(alienLazerShot);
-}
-
-// add enemies
-function addAliens(x) {
-    const alientCluster = document.createElement('div');
-    alientCluster.classList.add('alien-cluster');
-
-    for(let i = 0; i < 55; i++) { 
-        const alien = document.createElement('div');
-        alien.classList.add('alien');
-       
-        if (i < 11) {
-            alien.classList.add('alien-40pts');
-        } else if(i < 33) { 
-            alien.classList.add('alien-20pts');
-        } else { 
-            alien.classList.add('alien-10pts');
-        }
-        alientCluster.appendChild(alien);
-    }
-    alientCluster.style.top = game.offsetHeight + 'px'
-    alientCluster.x = x;
-    alientCluster.style.left = alientCluster.x + 'px'
-    gameArea.appendChild(alientCluster);
-
-}
-
-function addShields() {
-    const shieldField = document.createElement('div');
-    shieldField.classList.add('shield-field');
-
-    for(let i = 0; i < 4; i++) { 
-        let shield = document.createElement('div');
-        shield.classList.add('shield', 'shield-full-hp');
-        shieldField.appendChild(shield);
-    }
-
-    shieldField.style.width = gameArea.offsetWidth / 1.25 + 'px';
-    shieldField.style.top = (gameArea.offsetHeight - 200) + 'px';
-    shieldField.style.left = gameArea.offsetWidth / 10 + 'px';
-
-    gameArea.appendChild(shieldField);
-}
-
-// collision detector 
-function isCollision(firstElement, secondElement) {
-    let firstRect = firstElement.getBoundingClientRect();
-    let secondRect = secondElement.getBoundingClientRect();
-
-    return !(firstRect.top > secondRect.bottom ||
-            firstRect.bottom < secondRect.top ||
-            firstRect.right < secondRect.left ||
-            firstRect.left > secondRect.right);
-}
-
-function gameOverAction() {
-    scene.isActive = false;
-    gameOver.classList.remove('hidden');
-}
-
-// restat game option
-function gameRestart() {
-    gameOver.classList.add('hidden');
-    let alienCluster = document.querySelector('.alien-cluster');
-    alienCluster.remove();
-    let lazerShots = document.querySelectorAll('.lazer-shot');
-    lazerShots.forEach(lazerShot =>lazerShot.remove());
-
-    const defender = document.querySelector('.defender');
-    defender.remove();
-
-    let alienLazerShots = document.querySelectorAll('.alien-lazer-shot');
-        alienLazerShots.forEach(alienLazerShot => alienLazerShot.remove());
-
-    let lives = document.querySelectorAll('.one-live');
-    lives.forEach(live => live.remove());
-    
-    player = {
-        x: 100,
-        y: gameArea.offsetHeight - 50,
-        width: 0,
-        height: 0,
-        lastTimeShot: 0,
-        lives: 3,
-    }
-    scene = { 
-        score: 0,
-        lastAlienSpriteInterval:0,
-        lastAlienLazerShotSpriteInterval: 0,
-        lastAlienLazerShot: 0,
-        lastSpawnMothership:0,
-        isActive: true,
-    }
-    onGameStart();
-}
-
-// split into modules
 
 // Bug fixes:
 // respawn aliens animation gets fuck up after respawning - may have to give remove alien cluster and add it again
