@@ -7,7 +7,7 @@ Dear viewer,
 This is a recreation of the all time classic arcade game Space Invaders. It was made using purely HTML, CSS and plain JS.
 
 What is can do:
-- You can play
+- You can play the game using the arrow keys to move and the spacebar to shoot. 
 
 Used dependencies:
 - None
@@ -15,6 +15,7 @@ Used dependencies:
 Things to bear in mind:
 - The game is meant to be played on a screen which is at least 1024px wide.
 - The game was made before I knew what JS modules were so all of the code is concentrated into just a couple of files.
+- It does have a 'soundtrack' which start playing after starting the game
 
 Please leave a comment.
 
