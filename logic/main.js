@@ -1,12 +1,19 @@
 import { AddAlienLazerShot } from "./addObjects/addAlienLazerShot.js";
 import { AddDefenderLazerShot } from "./addObjects/addDefenderLazerShot.js";
 import { AddMothership } from "./addObjects/addMothership.js";
+import { alienSpriteAnimation } from "./animations/alienSprites.js";
+import { defenderAlienLazerShotCollisionChecker } from "./collisionChecker/defenderAlienLazershot.js";
+import { shieldAlienLazerShotCollisionChecker } from "./collisionChecker/shieldAlienLazerShot.js";
 import { deathAndPoints } from "./deathAndPoints/deathAndPoints.js";
 import { game, scene } from "./generalGameInfo/generalInfo.js";
 import { alienClusterMovement } from "./objectMovement/alienCluster.js";
+import { alienLazerShotsMovmentAndCollisionChecker } from "./objectMovement/alienLazerShots.js";
 import { lazerShotsMovement } from "./objectMovement/lazerShots.js";
+import { mothershipMovement } from "./objectMovement/mothership.js";
 import { player } from "./player/player.js";
 import { keys } from "./player/playerMovement.js";
+import { pointsUpdate } from "./points/pointsUpdate.js";
+import { respawnAliens } from "./respwan/aliens.js";
 import { sounds } from "./sounds.js";
 import {
   onGameStart,
@@ -14,6 +21,8 @@ import {
   gameRestart,
   isCollision,
 } from "./utilityFuncs.js";
+
+const addMothership = AddMothership;
 
 const startButton = document.querySelector(".start-button");
 export let gameArea = document.querySelector(".game-area");
@@ -28,13 +37,17 @@ sounds.backgroundMusic.addEventListener("ended", function () {
 });
 
 // start game button event listener
-startButton.addEventListener("click", onGameStart);
+startButton.addEventListener("click", () => {
+  return onGameStart(gameAction);
+});
 
 // game over and restart game event listener
 gameOver.addEventListener("click", gameRestart);
 
+// for testing purposes TODO - delete
+
 // game engine
-export function gameAction(timestamp) {
+function gameAction(timestamp) {
   const defender = document.querySelector(".defender");
 
   // movement keys
@@ -71,63 +84,10 @@ export function gameAction(timestamp) {
   deathAndPoints(aliens, lazerShots, isCollision, sounds, scene);
 
   // respawn aliens
-  let alienRespawnChecker = Array.from(aliens).filter((alien) =>
-    alien.classList.contains("dead-alien")
-  );
-  if (alienRespawnChecker.length === 55) {
-    aliens.forEach((alien) => {
-      alien.classList.remove("dead-alien");
-    });
-  }
+  respawnAliens(aliens, game);
 
   // aliens sprite animation
-  if (
-    timestamp - scene.lastAlienSpriteInterval >
-    game.alienSpriteChangeInterval
-  ) {
-    aliens.forEach((alien) => {
-      if (alien.classList.contains("alien-40pts")) {
-        if (alien.style.backgroundImage.includes("-40pts-1")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-40pts-2.png')";
-        } else if (alien.style.backgroundImage.includes("-40pts-2")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-40pts-1.png')";
-        } else {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-40pts-2.png')";
-        }
-      }
-
-      if (alien.classList.contains("alien-20pts")) {
-        if (alien.style.backgroundImage.includes("-20pts-1")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-20pts-2.png')";
-        } else if (alien.style.backgroundImage.includes("-20pts-2")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-20pts-1.png')";
-        } else {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-20pts-2.png')";
-        }
-      }
-
-      if (alien.classList.contains("alien-10pts")) {
-        if (alien.style.backgroundImage.includes("-10pts-1")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-10pts-2.png')";
-        } else if (alien.style.backgroundImage.includes("-10pts-2")) {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-10pts-1.png')";
-        } else {
-          alien.style.backgroundImage =
-            "url('./images/aliens/enemy-10pts-2.png')";
-        }
-      }
-
-      scene.lastAlienSpriteInterval = timestamp;
-    });
-  }
+  alienSpriteAnimation(timestamp, scene, game, aliens);
 
   // aliens firing back (in self defence)
   let remainingAliens = Array.from(aliens).filter(
@@ -142,71 +102,20 @@ export function gameAction(timestamp) {
 
   // add movment and collision to alien lazer shots
   let alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
-  alienLazerShots.forEach((alienLazerShot) => {
-    alienLazerShot.y += game.speed;
-    alienLazerShot.style.top = alienLazerShot.y + "px";
-    if (
-      timestamp - scene.lastAlienLazerShotSpriteInterval >
-      game.alienLazerShotSpriteChangeInterval
-    ) {
-      if (alienLazerShot.style.backgroundImage.includes("type-1")) {
-        alienLazerShot.style.backgroundImage =
-          "url('./images/aliens/attack-type-2.png')";
-      } else if (alienLazerShot.style.backgroundImage.includes("type-2")) {
-        alienLazerShot.style.backgroundImage =
-          "url('./images/aliens/attack-type-1.png')";
-      } else {
-        alienLazerShot.style.backgroundImage =
-          "url('./images/aliens/attack-type-2.png')";
-      }
 
-      scene.lastAlienLazerShotSpriteInterval = timestamp;
-    }
-
-    if (
-      alienLazerShot.y + alienLazerShot.offsetHeight >
-      gameArea.offsetHeight - alienLazerShot.offsetHeight / 2
-    ) {
-      alienLazerShot.remove();
-    }
-
-    if (isCollision(defender, alienLazerShot)) {
-      let lives = document.querySelectorAll(".one-live");
-      alienLazerShot.remove();
-      if (lives.length > 1) {
-        player.x = 100;
-        player.y = gameArea.offsetHeight - 50;
-        defender.style.left = player.x + "px";
-        defender.style.top = player.y + "px";
-        lives[lives.length - 1].remove();
-      } else {
-        lives[lives.length - 1].remove();
-        gameOverAction();
-      }
-    }
-
-    let shields = document.querySelectorAll(".shield");
-    shields.forEach((shield) => {
-      if (
-        isCollision(shield, alienLazerShot) &&
-        shield.classList.contains("shield-destroyed") === false
-      ) {
-        if (shield.classList.contains("shield-full-hp")) {
-          shield.classList.remove("shield-full-hp");
-          shield.classList.add("shield-1hit");
-        } else if (shield.classList.contains("shield-1hit")) {
-          shield.classList.remove("shield-1hit");
-          shield.classList.add("shield-2hits");
-        } else if (shield.classList.contains("shield-2hits")) {
-          shield.classList.remove("shield-2hits");
-          shield.classList.add("shield-3hits");
-        } else if (shield.classList.contains("shield-3hits")) {
-          shield.classList.add("shield-destroyed");
-        }
-        alienLazerShot.remove();
-      }
-    });
-  });
+  alienLazerShotsMovmentAndCollisionChecker(
+    alienLazerShots,
+    game,
+    scene,
+    player,
+    timestamp,
+    gameArea,
+    isCollision,
+    defender,
+    gameOverAction,
+    defenderAlienLazerShotCollisionChecker,
+    shieldAlienLazerShotCollisionChecker
+  );
 
   // add mothership
   if (
@@ -219,6 +128,7 @@ export function gameAction(timestamp) {
 
   // add mothership movement
   let motherships = document.querySelectorAll(".mothership");
+
   motherships.forEach((mothership) => {
     mothership.x -= game.speed;
     mothership.style.left = mothership.x + "px";
@@ -232,15 +142,7 @@ export function gameAction(timestamp) {
     }
   });
 
-  points.textContent = scene.score;
-  // adding extra live
-  if (scene.score / 1000 >= game.extraLivesCounter) {
-    let livesCounter = document.querySelector(".lives-counter");
-    let live = document.createElement("div");
-    live.classList.add("one-live");
-    livesCounter.appendChild(live);
-    game.extraLivesCounter++;
-  }
+  pointsUpdate(points, scene, game);
 
   if (scene.isActive) {
     window.requestAnimationFrame(gameAction);
