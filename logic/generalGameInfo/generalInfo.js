@@ -12,6 +12,7 @@ export let game = {
     extraLivesCounter: 1,
     mothershipSpawnInterval: 50000,
     mothershipMovementMultiplier: 5,
+    maxAlienClusterSize: 55,
 }
 
 export let scene = { 
