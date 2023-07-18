@@ -1,8 +1,7 @@
 import { AddAlienCluster } from "./addObjects/addAlienCluster.js";
 import { AddDefender } from "./addObjects/addDefender.js";
 import { AddShields } from "./addObjects/addShields.js";
-import { scene } from "./generalGameInfo/generalInfo.js";
-import { gameAction, gameArea, gameOver } from "./main.js";
+import { scene, game } from "./generalGameInfo/generalInfo.js";
 import { player } from "./player/player.js";
 import { sounds } from "./sounds.js";
 
@@ -22,20 +21,20 @@ export function isCollision(firstElement, secondElement) {
 }
 
 // game over checker
-export function gameOverAction() {
+export function gameOverAction(gameOver) {
   scene.isActive = false;
   gameOver.classList.remove("hidden");
 }
 
 // start game
-export function onGameStart() {
+export function onGameStart(gameAction) {
   startGame.classList.add("hidden");
   const defender = new AddDefender(player);
 
   player.height = defender.offsetHeight;
   player.width = defender.offsetWidth;
 
-  new AddAlienCluster(0);
+  new AddAlienCluster(0, game);
   new AddShields();
   sounds.backgroundMusic.play();
 
@@ -50,7 +49,7 @@ export function onGameStart() {
 }
 
 // restat game option
-export function gameRestart() {
+export function gameRestart(gameArea) {
   gameOver.classList.add("hidden");
   let alienCluster = document.querySelector(".alien-cluster");
   alienCluster.remove();

@@ -1,10 +1,10 @@
 export class AddMothership {
   mothership;
   mothershipCurrentSound;
+  motherships;
 
   constructor(gameArea, sounds) {
     this.render(gameArea, sounds);
-    return this.mothership;
   }
 
   render(gameArea, sounds) {

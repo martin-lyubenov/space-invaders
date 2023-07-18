@@ -1,0 +1,4 @@
+clean up the main.js files as much as possible
+move the endgine to a different file?
+do all of the imports int he main.js file and pass all needed information as parameters. This will prevent ambigiuous imports
+add the movement files in 

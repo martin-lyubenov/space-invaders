@@ -4,7 +4,8 @@ export function defenderAlienLazerShotCollisionChecker(
   alienLazerShot,
   gameOverAction,
   player,
-  gameArea
+  gameArea,
+  gameOver
 ) {
   if (isCollision(defender, alienLazerShot)) {
     let lives = document.querySelectorAll(".one-live");
@@ -17,7 +18,7 @@ export function defenderAlienLazerShotCollisionChecker(
       lives[lives.length - 1].remove();
     } else {
       lives[lives.length - 1].remove();
-      gameOverAction();
+      gameOverAction(gameOver);
     }
   }
 }

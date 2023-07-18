@@ -1,5 +1,3 @@
-import { game } from "../generalGameInfo/generalInfo.js";
-
 const gameArea = document.querySelector(".game-area");
 
 // class to render a single Alien
@@ -19,16 +17,16 @@ class AddSingleAlien {
 export class AddAlienCluster {
   alienCluster;
 
-  constructor(x) {
-    this.render(x);
+  constructor(x, game) {
+    this.render(x, game);
     return this.alienCluster;
   }
 
-  render(x) {
+  render(x, game) {
     this.alienCluster = document.createElement("div");
     this.alienCluster.classList.add("alien-cluster");
 
-    for (let i = 0; i < 55; i++) {
+    for (let i = 0; i < game.maxAlienClusterSize; i++) {
       const alien = new AddSingleAlien();
 
       if (i < 11) {
