@@ -1,4 +1,5 @@
-export function alienSpriteAnimation(timestamp, scene, game, aliens) {
+export function alienSpriteAnimation({ scene, game }, timestamp) {
+  const aliens = document.querySelectorAll(".alien");
   if (
     timestamp - scene.lastAlienSpriteInterval >
     game.alienSpriteChangeInterval

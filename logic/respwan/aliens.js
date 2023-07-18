@@ -1,6 +1,6 @@
-
-export function respawnAliens(aliens, game) {
-    let alienRespawnChecker = Array.from(aliens).filter((alien) =>
+export function respawnAliens( game) {
+  const aliens = document.querySelectorAll(".alien");
+  let alienRespawnChecker = Array.from(aliens).filter((alien) =>
     alien.classList.contains("dead-alien")
   );
   if (alienRespawnChecker.length === game.maxAlienClusterSize) {

@@ -1,4 +1,5 @@
-export function alienClusterMovement(alienCluster, game, gameArea) {
+export function alienClusterMovement({ game, gameArea }) {
+  const alienCluster = document.querySelector(".alien-cluster");
   if (game.alienPos + alienCluster.offsetWidth > gameArea.offsetWidth - 100) {
     game.alienDirection = -game.speed;
   } else if (game.alienPos < 100) {

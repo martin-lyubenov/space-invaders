@@ -1,16 +1,19 @@
 export function alienLazerShotsMovmentAndCollisionChecker(
-  alienLazerShots,
-  game,
-  scene,
-  player,
-  timestamp,
-  gameArea,
-  isCollision,
-  defender,
-  gameOverAction,
-  defenderAlienLazerShotCollisionChecker,
-  shieldAlienLazerShotCollisionChecker
+  {
+    game,
+    scene,
+    player,
+    gameArea,
+    isCollision,
+    gameOverAction,
+    defenderAlienLazerShotCollisionChecker,
+    shieldAlienLazerShotCollisionChecker,
+    gameOver
+  },
+  timestamp
 ) {
+  const defender = document.querySelector(".defender");
+  let alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
   alienLazerShots.forEach((alienLazerShot) => {
     alienLazerShot.y += game.speed;
     alienLazerShot.style.top = alienLazerShot.y + "px";
@@ -40,15 +43,18 @@ export function alienLazerShotsMovmentAndCollisionChecker(
       alienLazerShot.remove();
     }
 
+    // checks if the alien lazer shot has hit the defender
     defenderAlienLazerShotCollisionChecker(
       defender,
       isCollision,
       alienLazerShot,
       gameOverAction,
       player,
-      gameArea
+      gameArea,
+      gameOver
     );
 
+    // checks if the alien lazer shot has hit a shield
     shieldAlienLazerShotCollisionChecker(alienLazerShot, isCollision);
   });
 }

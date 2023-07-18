@@ -1,4 +1,5 @@
-export function lazerShotsMovement(lazerShots, game, isCollision) {
+export function lazerShotsMovement({ game, isCollision }) {
+  let lazerShots = document.querySelectorAll(".lazer-shot");
   lazerShots.forEach((lazerShot) => {
     lazerShot.y -= game.speed;
     lazerShot.style.top = lazerShot.y + "px";
