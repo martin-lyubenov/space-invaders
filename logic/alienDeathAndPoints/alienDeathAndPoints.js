@@ -1,5 +1,7 @@
-export function deathAndPoints(aliens, lazerShots, isCollision, sounds, scene) {
+export function alienDeathAndPoints({ isCollision, sounds, scene }) {
+  let aliens = document.querySelectorAll(".alien");
   aliens.forEach((alien) => {
+    let lazerShots = document.querySelectorAll(".lazer-shot");
     lazerShots.forEach((lazerShot) => {
       if (
         isCollision(lazerShot, alien) &&
