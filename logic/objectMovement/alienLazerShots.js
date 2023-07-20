@@ -5,7 +5,6 @@ export function alienLazerShotsMovmentAndCollisionChecker(
     player,
     gameArea,
     isCollision,
-    gameOverAction,
     defenderAlienLazerShotCollisionChecker,
     shieldAlienLazerShotCollisionChecker,
     gameOver
@@ -48,10 +47,10 @@ export function alienLazerShotsMovmentAndCollisionChecker(
       defender,
       isCollision,
       alienLazerShot,
-      gameOverAction,
       player,
       gameArea,
-      gameOver
+      gameOver,
+      scene
     );
 
     // checks if the alien lazer shot has hit a shield

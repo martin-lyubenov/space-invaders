@@ -17,14 +17,13 @@ import {
 } from "./player/playerMovementControlls.js";
 import { pointsUpdate } from "./points/pointsUpdate.js";
 import { respawnAliens } from "./respwan/aliens.js";
-import { sounds } from "./sounds.js";
-import {
-  onGameStart,
-  gameOverAction,
-  gameRestart,
-  isCollision,
-} from "./utilityFuncs.js";
+import { sounds } from "./sounds/sounds.js";
+import { onGameStart, gameRestart, isCollision } from "./util/utilityFuncs.js";
 import { alienFiringCycle } from "./alienFiringCycle/alienFiringCycle.js";
+import { mothershipMovement } from "./objectMovement/mothership.js";
+import { AddAlienCluster } from "./addObjects/addAlienCluster.js";
+import { AddShields } from "./addObjects/addShields.js";
+import { AddDefender } from "./addObjects/addDefender.js";
 
 const startButton = document.querySelector(".start-button");
 let gameArea = document.querySelector(".game-area");
@@ -35,16 +34,6 @@ const points = document.querySelector(".points");
 sounds.backgroundMusic.addEventListener("ended", function () {
   this.currentTime = 0;
   this.play();
-});
-
-// start game button event listener
-startButton.addEventListener("click", () => {
-  return onGameStart(gameAction);
-});
-
-// game over and restart game event listener
-gameOver.addEventListener("click", () => {
-  return gameRestart(gameArea);
 });
 
 // done to reduce types and easy of adding new parameters to the gameAction
@@ -63,22 +52,55 @@ const gameActionAssetsConfigObject = {
     player,
     gameArea,
     isCollision,
-    gameOverAction,
     defenderAlienLazerShotCollisionChecker,
     shieldAlienLazerShotCollisionChecker,
     gameOver,
   },
   alienFiringCycle: { scene, game, AddAlienLazerShot },
+  mothershipMovement: { game, mothershipCurrentSound: undefined },
 };
+
+const gameButtonsConfigObj = {
+  onGameStart: {
+    gameAction,
+    player,
+    game,
+    AddDefender,
+    AddAlienCluster,
+    AddShields,
+    sounds,
+  },
+  gameRestart: {
+    gameArea,
+    gameOver,
+    player,
+    scene,
+    onGameStartConfigObj: {
+      gameAction,
+      player,
+      game,
+      AddDefender,
+      AddAlienCluster,
+      AddShields,
+      sounds,
+    },
+  },
+};
+
+// start game button event listener
+startButton.addEventListener("click", () => {
+  return onGameStart(gameButtonsConfigObj.onGameStart);
+});
+
+// game over and restart game event listener
+gameOver.addEventListener("click", () => {
+  return gameRestart(gameButtonsConfigObj.gameRestart);
+});
 
 // game engine
 function gameAction(timestamp) {
   // movement keys
-
   playerMovementControlls(gameActionAssetsConfigObject.playerMovementControlls);
-
-  // apply movement
-  playerMovement(gameActionAssetsConfigObject.playerMovement);
 
   // shooting
   playerShootingControlls(
@@ -86,10 +108,13 @@ function gameAction(timestamp) {
     timestamp //timestam must always be added as it comes from the gameAction func itself
   );
 
+  // apply player movement
+  playerMovement(gameActionAssetsConfigObject.playerMovement);
+
   // add lazer movement
   lazerShotsMovement(gameActionAssetsConfigObject.lazerShotsMovement);
 
-  // adding alient cluster movment
+  // add alient cluster movement
   alienClusterMovement(gameActionAssetsConfigObject.alienClusterMovement);
 
   // alien death and points
@@ -118,25 +143,14 @@ function gameAction(timestamp) {
     timestamp - scene.lastSpawnMothership >
     game.mothershipSpawnInterval + 50000 * Math.random()
   ) {
-    new AddMothership(gameArea, sounds);
+    const mothership = new AddMothership(gameArea, sounds);
+    gameActionAssetsConfigObject.mothershipMovement.mothershipCurrentSound =
+      mothership.mothershipCurrentSound;
     scene.lastSpawnMothership = timestamp;
   }
 
   // add mothership movement
-  let motherships = document.querySelectorAll(".mothership");
-
-  motherships.forEach((mothership) => {
-    mothership.x -= game.speed;
-    mothership.style.left = mothership.x + "px";
-
-    if (mothership.classList.contains("dead-alien") === false) {
-      mothershipCurrentSound.play();
-    }
-
-    if (mothership.x + mothership.offsetWidth <= 0) {
-      mothership.remove();
-    }
-  });
+  mothershipMovement(gameActionAssetsConfigObject.mothershipMovement);
 
   pointsUpdate(points, scene, game);
 
@@ -144,6 +158,3 @@ function gameAction(timestamp) {
     window.requestAnimationFrame(gameAction);
   }
 }
-
-// Bug fixes:
-// respawn aliens animation gets fuck up after respawning - may have to give remove alien cluster and add it again

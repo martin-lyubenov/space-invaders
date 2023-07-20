@@ -2,11 +2,16 @@ export function defenderAlienLazerShotCollisionChecker(
   defender,
   isCollision,
   alienLazerShot,
-  gameOverAction,
   player,
   gameArea,
-  gameOver
+  gameOver,
+  scene
 ) {
+  function gameOverAction(gameOver) {
+    scene.isActive = false;
+    gameOver.classList.remove("hidden");
+  }
+
   if (isCollision(defender, alienLazerShot)) {
     let lives = document.querySelectorAll(".one-live");
     alienLazerShot.remove();
