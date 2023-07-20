@@ -1,10 +1,3 @@
-import { AddAlienCluster } from "./addObjects/addAlienCluster.js";
-import { AddDefender } from "./addObjects/addDefender.js";
-import { AddShields } from "./addObjects/addShields.js";
-import { scene, game } from "./generalGameInfo/generalInfo.js";
-import { player } from "./player/player.js";
-import { sounds } from "./sounds.js";
-
 const startGame = document.querySelector(".start-game");
 
 // collision detector
@@ -20,14 +13,16 @@ export function isCollision(firstElement, secondElement) {
   );
 }
 
-// game over checker
-export function gameOverAction(gameOver) {
-  scene.isActive = false;
-  gameOver.classList.remove("hidden");
-}
-
 // start game
-export function onGameStart(gameAction) {
+export function onGameStart({
+  gameAction,
+  player,
+  game,
+  AddAlienCluster,
+  AddShields,
+  sounds,
+  AddDefender
+}) {
   startGame.classList.add("hidden");
   const defender = new AddDefender(player);
 
@@ -49,7 +44,13 @@ export function onGameStart(gameAction) {
 }
 
 // restat game option
-export function gameRestart(gameArea) {
+export function gameRestart({
+  gameArea,
+  gameOver,
+  player,
+  scene,
+  onGameStartConfigObj,
+}) {
   gameOver.classList.add("hidden");
   let alienCluster = document.querySelector(".alien-cluster");
   alienCluster.remove();
@@ -79,5 +80,5 @@ export function gameRestart(gameArea) {
   scene.lastSpawnMothership = 0;
   scene.isActive = true;
 
-  onGameStart();
+  onGameStart(onGameStartConfigObj);
 }
