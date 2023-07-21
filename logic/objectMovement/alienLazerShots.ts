@@ -1,3 +1,23 @@
+import { IGameObject, ISceneObject } from "../models/generalInfo";
+import { IIsCollision } from "../models/isCollision";
+import { IPlayer } from "../models/player";
+
+type defenderAlienLazerShotCollisionChecker = {
+  (
+    defender: HTMLDivElement,
+    isCollision: IIsCollision,
+    alienLazerShot: HTMLDivElement,
+    player: IPlayer,
+    gameArea: HTMLDivElement,
+    gameOver: HTMLDivElement,
+    scene: ISceneObject
+  ): void;
+};
+
+type shieldAlienLazerShotCollisionChecker = {
+  (alienLazerShot: HTMLDivElement, isCollision: IIsCollision): void;
+};
+
 export function alienLazerShotsMovmentAndCollisionChecker(
   {
     game,
@@ -7,12 +27,23 @@ export function alienLazerShotsMovmentAndCollisionChecker(
     isCollision,
     defenderAlienLazerShotCollisionChecker,
     shieldAlienLazerShotCollisionChecker,
-    gameOver
+    gameOver,
+  }: {
+    game: IGameObject;
+    scene: ISceneObject;
+    player: IPlayer;
+    gameArea: HTMLDivElement;
+    isCollision: IIsCollision;
+    defenderAlienLazerShotCollisionChecker: defenderAlienLazerShotCollisionChecker;
+    shieldAlienLazerShotCollisionChecker: shieldAlienLazerShotCollisionChecker;
+    gameOver: HTMLDivElement;
   },
-  timestamp
+  timestamp: number
 ) {
-  const defender = document.querySelector(".defender");
-  let alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
+  const defender = document.querySelector(".defender")! as HTMLDivElement;
+  let alienLazerShots = document.querySelectorAll(
+    ".alien-lazer-shot"
+  ) as NodeListOf<HTMLDivElement>;
   alienLazerShots.forEach((alienLazerShot) => {
     alienLazerShot.y += game.speed;
     alienLazerShot.style.top = alienLazerShot.y + "px";

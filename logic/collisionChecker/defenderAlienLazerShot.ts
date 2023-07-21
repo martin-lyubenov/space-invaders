@@ -1,13 +1,17 @@
+import { ISceneObject } from "../models/generalInfo";
+import { IIsCollision } from "../models/isCollision";
+import { IPlayer } from "../models/player";
+
 export function defenderAlienLazerShotCollisionChecker(
-  defender,
-  isCollision,
-  alienLazerShot,
-  player,
-  gameArea,
-  gameOver,
-  scene
+  defender: HTMLDivElement,
+  isCollision: IIsCollision,
+  alienLazerShot: HTMLDivElement,
+  player: IPlayer,
+  gameArea: HTMLDivElement,
+  gameOver: HTMLDivElement,
+  scene: ISceneObject
 ) {
-  function gameOverAction(gameOver) {
+  function gameOverAction(gameOver: HTMLDivElement) {
     scene.isActive = false;
     gameOver.classList.remove("hidden");
   }

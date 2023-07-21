@@ -1,5 +1,12 @@
-export function alienSpriteAnimation({ scene, game }, timestamp) {
-  const aliens = document.querySelectorAll(".alien");
+import { IGameObject, ISceneObject } from "../models/generalInfo";
+
+export function alienSpriteAnimation(
+  { scene, game }: { scene: ISceneObject; game: IGameObject },
+  timestamp: number
+) {
+  const aliens = document.querySelectorAll(
+    ".alien"
+  ) as NodeListOf<HTMLDivElement>;
   if (
     timestamp - scene.lastAlienSpriteInterval >
     game.alienSpriteChangeInterval

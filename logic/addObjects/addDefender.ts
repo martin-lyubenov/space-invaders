@@ -1,14 +1,15 @@
-const gameArea = document.querySelector(".game-area");
+import { IPlayer } from "../models/player";
+
+const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
 export class AddDefender {
-  defender;
+  defender!: HTMLDivElement;
 
-  constructor(player) {
+  constructor(player: IPlayer) {
     this.render(player);
-    return this.defender;
   }
 
-  render(player) {
+  private render(player: IPlayer) {
     this.defender = document.createElement("div");
     this.defender.classList.add("defender");
     this.defender.style.left = player.x + "px";

@@ -1,7 +1,23 @@
-export function alienDeathAndPoints({ isCollision, sounds, scene }) {
-  let aliens = document.querySelectorAll(".alien");
+import { ISceneObject } from "../models/generalInfo";
+import { IIsCollision } from "../models/isCollision";
+import { ISounds } from "../models/sounds";
+
+export function alienDeathAndPoints({
+  isCollision,
+  sounds,
+  scene,
+}: {
+  isCollision: IIsCollision;
+  sounds: ISounds;
+  scene: ISceneObject;
+}) {
+  let aliens = document.querySelectorAll(
+    ".alien"
+  ) as NodeListOf<HTMLDivElement>;
   aliens.forEach((alien) => {
-    let lazerShots = document.querySelectorAll(".lazer-shot");
+    let lazerShots = document.querySelectorAll(
+      ".lazer-shot"
+    ) as NodeListOf<HTMLDivElement>;
     lazerShots.forEach((lazerShot) => {
       if (
         isCollision(lazerShot, alien) &&

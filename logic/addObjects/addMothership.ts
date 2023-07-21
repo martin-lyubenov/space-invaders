@@ -1,13 +1,14 @@
-export class AddMothership {
-  mothership;
-  mothershipCurrentSound;
-  motherships;
+import { ISounds } from "../models/sounds";
 
-  constructor(gameArea, sounds) {
+export class AddMothership {
+  mothership!: HTMLDivElement;
+  mothershipCurrentSound!: HTMLAudioElement;
+
+  constructor(gameArea: HTMLDivElement, sounds: ISounds) {
     this.render(gameArea, sounds);
   }
 
-  render(gameArea, sounds) {
+  private render(gameArea: HTMLDivElement, sounds: ISounds) {
     this.mothership = document.createElement("div");
     this.mothership.classList.add("alien", "mothership");
     this.mothership.x = gameArea.offsetWidth;

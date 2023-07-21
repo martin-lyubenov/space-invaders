@@ -1,6 +1,16 @@
+import { IGameObject } from "../models/generalInfo";
+
 // TODO must fix problem with mothership sound
-export function mothershipMovement({game, mothershipCurrentSound}) {
-  let motherships = document.querySelectorAll(".mothership");
+export function mothershipMovement({
+  game,
+  mothershipCurrentSound,
+}: {
+  game: IGameObject;
+  mothershipCurrentSound: HTMLAudioElement;
+}) {
+  let motherships = document.querySelectorAll(
+    ".mothership"
+  ) as NodeListOf<HTMLDivElement>;
 
   motherships.forEach((mothership) => {
     mothership.x -= game.speed;

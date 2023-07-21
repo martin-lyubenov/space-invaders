@@ -1,14 +1,15 @@
-const gameArea = document.querySelector(".game-area");
+import { IPlayer } from "../models/player";
+
+const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
 export class AddDefenderLazerShot {
-  lazerShot;
+  lazerShot!: HTMLDivElement;
 
-  constructor(player) {
+  constructor(player: IPlayer) {
     this.render(player);
-    return this.lazerShot;
   }
 
-  render(player) {
+  private render(player: IPlayer) {
     this.lazerShot = document.createElement("div");
     this.lazerShot.classList.add("lazer-shot");
     this.lazerShot.y = player.y - player.height - 25;

@@ -1,13 +1,14 @@
-const gameArea = document.querySelector(".game-area");
+import { IGameObject } from "../models/generalInfo";
+
+const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
 // class to render a single Alien
 class AddSingleAlien {
-  alien;
+  alien!: HTMLDivElement;
   constructor() {
     this.render();
-    return this.alien;
   }
-  render() {
+  private render() {
     this.alien = document.createElement("div");
     this.alien.classList.add("alien");
   }
@@ -15,19 +16,21 @@ class AddSingleAlien {
 
 // class to render the whole alien cluster
 export class AddAlienCluster {
-  alienCluster;
+  // TODO, check if you can extend the HTMLdivElement interface in TS to remove the x does not exist
+  // this is HTMLDivElement, however TS does not support element.x value for some reason
+  alienCluster!: HTMLDivElement;
 
-  constructor(x, game) {
-    this.render(x, game);
-    return this.alienCluster;
+  constructor(game: IGameObject) {
+    this.render(game);
   }
 
-  render(x, game) {
+  private render(game: IGameObject) {
     this.alienCluster = document.createElement("div");
     this.alienCluster.classList.add("alien-cluster");
 
     for (let i = 0; i < game.maxAlienClusterSize; i++) {
-      const alien = new AddSingleAlien();
+      const alienInstance = new AddSingleAlien();
+      const alien = alienInstance.alien;
 
       if (i < 11) {
         alien.classList.add("alien-40pts");
@@ -38,9 +41,8 @@ export class AddAlienCluster {
       }
       this.alienCluster.appendChild(alien);
     }
-    this.alienCluster.style.top = game.offsetHeight + "px";
-    this.alienCluster.x = x;
-    this.alienCluster.style.left = this.alienCluster.x + "px";
+    this.alienCluster.style.top = gameArea.offsetHeight + "px";
+    this.alienCluster.style.top = 0 + "px";
     gameArea.appendChild(this.alienCluster);
   }
 }

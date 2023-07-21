@@ -1,17 +1,32 @@
+import { IGameObject } from "../models/generalInfo";
+import { IPlayer } from "../models/player";
+import { ISounds } from "../models/sounds";
+
 document.addEventListener("keydown", onKeyDown);
 document.addEventListener("keyup", onKeyUp);
 
-let keys = {};
-function onKeyDown(e) {
+let keys: {
+  [key: string]: boolean;
+} = {};
+
+function onKeyDown(e: KeyboardEvent) {
   keys[e.code] = true;
 }
 
-function onKeyUp(e) {
+function onKeyUp(e: KeyboardEvent) {
   keys[e.code] = false;
 }
 
 // movement controlls
-export function playerMovementControlls({ player, game, gameArea }) {
+export function playerMovementControlls({
+  player,
+  game,
+  gameArea,
+}: {
+  player: IPlayer;
+  game: IGameObject;
+  gameArea: HTMLDivElement;
+}) {
   if (keys.ArrowLeft && player.x > 0) {
     player.x -= game.speed * game.playerMovementMultiplier;
   }
@@ -23,8 +38,18 @@ export function playerMovementControlls({ player, game, gameArea }) {
 
 // shooting controlls
 export function playerShootingControlls(
-  { player, game, sounds, AddDefenderLazerShot },
-  timestamp
+  {
+    player,
+    game,
+    sounds,
+    AddDefenderLazerShot,
+  }: {
+    player: IPlayer;
+    game: IGameObject;
+    sounds: ISounds;
+    AddDefenderLazerShot: any;
+  },
+  timestamp: number
 ) {
   if (keys.Space && timestamp - player.lastTimeShot > game.fireInterval) {
     new AddDefenderLazerShot(player);

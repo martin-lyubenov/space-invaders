@@ -1,5 +1,12 @@
-export function shieldAlienLazerShotCollisionChecker(alienLazerShot, isCollision) {
-  let shields = document.querySelectorAll(".shield");
+import { IIsCollision } from "../models/isCollision";
+
+export function shieldAlienLazerShotCollisionChecker(
+  alienLazerShot: HTMLDivElement,
+  isCollision: IIsCollision
+) {
+  let shields = document.querySelectorAll(
+    ".shield"
+  ) as NodeListOf<HTMLDivElement>;
   shields.forEach((shield) => {
     if (
       isCollision(shield, alienLazerShot) &&

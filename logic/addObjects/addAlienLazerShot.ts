@@ -1,14 +1,13 @@
-const gameArea = document.querySelector(".game-area");
+const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
 export class AddAlienLazerShot {
-  alienLazerShot;
+  alienLazerShot!: HTMLDivElement;
 
-  constructor(alien) {
+  constructor(alien: HTMLDivElement) {
     this.render(alien);
-    return this.alienLazerShot;
   }
 
-  render(alien) {
+  private render(alien: HTMLDivElement) {
     if (alien === undefined) {
       return;
     }

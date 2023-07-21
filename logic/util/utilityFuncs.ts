@@ -1,7 +1,12 @@
-const startGame = document.querySelector(".start-game");
+import { IGameRestart, IGameStart } from "../models/buttons";
+
+const startGame = document.querySelector(".start-game")! as HTMLDivElement;
 
 // collision detector
-export function isCollision(firstElement, secondElement) {
+export function isCollision(
+  firstElement: HTMLDivElement,
+  secondElement: HTMLDivElement
+) {
   let firstRect = firstElement.getBoundingClientRect();
   let secondRect = secondElement.getBoundingClientRect();
 
@@ -21,19 +26,20 @@ export function onGameStart({
   AddAlienCluster,
   AddShields,
   sounds,
-  AddDefender
-}) {
+  AddDefender,
+}: IGameStart) {
   startGame.classList.add("hidden");
-  const defender = new AddDefender(player);
+  const defenderInstance = new AddDefender(player);
+  const defender = defenderInstance.defender;
 
   player.height = defender.offsetHeight;
   player.width = defender.offsetWidth;
 
-  new AddAlienCluster(0, game);
+  new AddAlienCluster(game);
   new AddShields();
   sounds.backgroundMusic.play();
 
-  let lives = document.querySelector(".lives-counter");
+  let lives = document.querySelector(".lives-counter")! as HTMLDivElement;
   for (let i = 0; i < 3; i++) {
     let live = document.createElement("div");
     live.classList.add("one-live");
@@ -50,21 +56,26 @@ export function gameRestart({
   player,
   scene,
   onGameStartConfigObj,
-}) {
+}: IGameRestart) {
   gameOver.classList.add("hidden");
-  let alienCluster = document.querySelector(".alien-cluster");
+  const alienCluster = document.querySelector(
+    ".alien-cluster"
+  )! as HTMLDivElement;
   alienCluster.remove();
   let lazerShots = document.querySelectorAll(".lazer-shot");
   lazerShots.forEach((lazerShot) => lazerShot.remove());
 
-  const defender = document.querySelector(".defender");
+  const defender = document.querySelector(".defender")! as HTMLDivElement;
   defender.remove();
 
-  let alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
+  const alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
   alienLazerShots.forEach((alienLazerShot) => alienLazerShot.remove());
 
-  let lives = document.querySelectorAll(".one-live");
+  const lives = document.querySelectorAll(".one-live");
   lives.forEach((live) => live.remove());
+
+  const shields = document.querySelector(".shield-field")! as HTMLDivElement;
+  shields.remove();
 
   player.x = 100;
   player.y = gameArea.offsetHeight - 50;

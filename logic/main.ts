@@ -1,40 +1,43 @@
-import { AddAlienLazerShot } from "./addObjects/addAlienLazerShot.js";
-import { AddDefenderLazerShot } from "./addObjects/addDefenderLazerShot.js";
-import { AddMothership } from "./addObjects/addMothership.js";
-import { alienSpriteAnimation } from "./animations/alienSprites.js";
-import { defenderAlienLazerShotCollisionChecker } from "./collisionChecker/defenderAlienLazershot.js";
-import { shieldAlienLazerShotCollisionChecker } from "./collisionChecker/shieldAlienLazerShot.js";
-import { alienDeathAndPoints } from "./alienDeathAndPoints/alienDeathAndPoints.js";
-import { game, scene } from "./generalGameInfo/generalInfo.js";
-import { alienClusterMovement } from "./objectMovement/alienCluster.js";
-import { alienLazerShotsMovmentAndCollisionChecker } from "./objectMovement/alienLazerShots.js";
-import { lazerShotsMovement } from "./objectMovement/lazerShots.js";
-import { playerMovement } from "./objectMovement/player.js";
-import { player } from "./player/player.js";
+import { AddAlienLazerShot } from "./addObjects/addAlienLazerShot";
+import { AddDefenderLazerShot } from "./addObjects/addDefenderLazerShot";
+import { AddMothership } from "./addObjects/addMothership";
+import { alienSpriteAnimation } from "./animations/alienSprites";
+import { defenderAlienLazerShotCollisionChecker } from "./collisionChecker/defenderAlienLazerShot";
+import { shieldAlienLazerShotCollisionChecker } from "./collisionChecker/shieldAlienLazerShot";
+import { alienDeathAndPoints } from "./alienDeathAndPoints/alienDeathAndPoints";
+import { game, scene } from "./generalGameInfo/generalInfo";
+import { alienClusterMovement } from "./objectMovement/alienCluster";
+import { alienLazerShotsMovmentAndCollisionChecker } from "./objectMovement/alienLazerShots";
+import { lazerShotsMovement } from "./objectMovement/lazerShots";
+import { playerMovement } from "./objectMovement/player";
+import { player } from "./player/player";
 import {
   playerMovementControlls,
   playerShootingControlls,
-} from "./player/playerMovementControlls.js";
-import { pointsUpdate } from "./points/pointsUpdate.js";
-import { respawnAliens } from "./respwan/aliens.js";
-import { sounds } from "./sounds/sounds.js";
-import { onGameStart, gameRestart, isCollision } from "./util/utilityFuncs.js";
-import { alienFiringCycle } from "./alienFiringCycle/alienFiringCycle.js";
-import { mothershipMovement } from "./objectMovement/mothership.js";
-import { AddAlienCluster } from "./addObjects/addAlienCluster.js";
-import { AddShields } from "./addObjects/addShields.js";
-import { AddDefender } from "./addObjects/addDefender.js";
+} from "./player/playerMovementControlls";
+import { pointsUpdate } from "./points/pointsUpdate";
+import { respawnAliens } from "./respwan/aliens";
+import { sounds } from "./sounds/sounds";
+import { onGameStart, gameRestart, isCollision } from "./util/utilityFuncs";
+import { alienFiringCycle } from "./alienFiringCycle/alienFiringCycle";
+import { mothershipMovement } from "./objectMovement/mothership";
+import { AddAlienCluster } from "./addObjects/addAlienCluster";
+import { AddShields } from "./addObjects/addShields";
+import { AddDefender } from "./addObjects/addDefender";
+import { IGameRestart, IGameStart } from "./models/buttons";
 
-const startButton = document.querySelector(".start-button");
-let gameArea = document.querySelector(".game-area");
-const gameOver = document.querySelector(".game-over");
-const points = document.querySelector(".points");
+const startButton = document.querySelector(".start-button")! as HTMLDivElement;
+let gameArea = document.querySelector(".game-area")! as HTMLDivElement;
+const gameOver = document.querySelector(".game-over")! as HTMLDivElement;
+const points = document.querySelector(".points")! as HTMLDivElement;
 
 // backgournd music loop
 sounds.backgroundMusic.addEventListener("ended", function () {
   this.currentTime = 0;
   this.play();
 });
+
+const test = AddAlienLazerShot;
 
 // done to reduce types and easy of adding new parameters to the gameAction
 const gameActionAssetsConfigObject = {
@@ -57,10 +60,14 @@ const gameActionAssetsConfigObject = {
     gameOver,
   },
   alienFiringCycle: { scene, game, AddAlienLazerShot },
-  mothershipMovement: { game, mothershipCurrentSound: undefined },
+  mothershipMovement: { game, mothershipCurrentSound: new Audio() },
+  pointsUpdate: { points, scene, game },
 };
 
-const gameButtonsConfigObj = {
+const gameButtonsConfigObj: {
+  onGameStart: IGameStart;
+  gameRestart: IGameRestart;
+} = {
   onGameStart: {
     gameAction,
     player,
@@ -98,7 +105,7 @@ gameOver.addEventListener("click", () => {
 });
 
 // game engine
-function gameAction(timestamp) {
+function gameAction(timestamp: number) {
   // movement keys
   playerMovementControlls(gameActionAssetsConfigObject.playerMovementControlls);
 
@@ -152,7 +159,7 @@ function gameAction(timestamp) {
   // add mothership movement
   mothershipMovement(gameActionAssetsConfigObject.mothershipMovement);
 
-  pointsUpdate(points, scene, game);
+  pointsUpdate(gameActionAssetsConfigObject.pointsUpdate);
 
   if (scene.isActive) {
     window.requestAnimationFrame(gameAction);
