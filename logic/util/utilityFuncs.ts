@@ -1,3 +1,4 @@
+import { AddPlayerLife } from "../addObjects/addPlayerLife";
 import { IGameRestart, IGameStart } from "../models/buttons";
 
 const startGame = document.querySelector(".start-game")! as HTMLDivElement;
@@ -39,11 +40,8 @@ export function onGameStart({
   new AddShields();
   sounds.backgroundMusic.play();
 
-  let lives = document.querySelector(".lives-counter")! as HTMLDivElement;
   for (let i = 0; i < 3; i++) {
-    let live = document.createElement("div");
-    live.classList.add("one-live");
-    lives.appendChild(live);
+    new AddPlayerLife();
   }
 
   window.requestAnimationFrame(gameAction);
@@ -71,8 +69,8 @@ export function gameRestart({
   const alienLazerShots = document.querySelectorAll(".alien-lazer-shot");
   alienLazerShots.forEach((alienLazerShot) => alienLazerShot.remove());
 
-  const lives = document.querySelectorAll(".one-live");
-  lives.forEach((live) => live.remove());
+  const lives = document.querySelectorAll(".one-life");
+  lives.forEach((life) => life.remove());
 
   const shields = document.querySelector(".shield-field")! as HTMLDivElement;
   shields.remove();

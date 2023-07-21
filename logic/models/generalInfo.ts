@@ -13,6 +13,7 @@ export interface IGameObject {
     mothershipSpawnInterval: number;
     mothershipMovementMultiplier: number;
     maxAlienClusterSize: number;
+    maxPlayerLives: number;
 }
 
 export interface ISceneObject { 

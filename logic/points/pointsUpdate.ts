@@ -1,4 +1,7 @@
+import { AddPlayerLife } from "../addObjects/addPlayerLife";
 import { IGameObject, ISceneObject } from "../models/generalInfo";
+
+// logic for updating the player points
 
 export function pointsUpdate({
   points,
@@ -10,14 +13,16 @@ export function pointsUpdate({
   game: IGameObject;
 }) {
   points.textContent = scene.score.toString();
-  // adding extra live
-  if (scene.score / 1000 >= game.extraLivesCounter) {
-    let livesCounter = document.querySelector(
-      ".lives-counter"
-    )! as HTMLDivElement;
-    let live = document.createElement("div");
-    live.classList.add("one-live");
-    livesCounter.appendChild(live);
+
+  const lives = document.querySelectorAll(".one-life");
+
+  // for every 1000 points the player is awared an extra life
+  // the player cannot have more than 5 lives
+  if (
+    scene.score / 1000 >= game.extraLivesCounter &&
+    lives.length <= game.maxPlayerLives
+  ) {
+    new AddPlayerLife();
     game.extraLivesCounter++;
   }
 }
