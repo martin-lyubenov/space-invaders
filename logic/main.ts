@@ -150,7 +150,7 @@ function gameAction(timestamp: number) {
     timestamp - scene.lastSpawnMothership >
     game.mothershipSpawnInterval + 50000 * Math.random()
   ) {
-    const mothership = new AddMothership(gameArea, sounds);
+    const mothership = new AddMothership(sounds);
     gameActionAssetsConfigObject.mothershipMovement.mothershipCurrentSound =
       mothership.mothershipCurrentSound;
     scene.lastSpawnMothership = timestamp;

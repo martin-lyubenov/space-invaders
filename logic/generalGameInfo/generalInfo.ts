@@ -1,5 +1,8 @@
 import { IGameObject, ISceneObject } from "../models/generalInfo";
 
+// module hold objects that contain general information about the game state ( but not about the player, his state is in the player folder)
+
+// general state info about the game state
 export let game: IGameObject = {
   speed: 2,
   playerMovementMultiplier: 2,
@@ -17,11 +20,13 @@ export let game: IGameObject = {
   maxAlienClusterSize: 55,
 };
 
+// general state info about scene
+// most of the values start at 0 but are updated through the game
 export let scene: ISceneObject = {
   score: 0,
   lastAlienSpriteInterval: 0,
   lastAlienLazerShotSpriteInterval: 0,
   lastAlienLazerShot: 0,
   lastSpawnMothership: 0,
-  isActive: true,
+  isActive: true, // checks if the game is still active, if set to false the game will stop
 };
