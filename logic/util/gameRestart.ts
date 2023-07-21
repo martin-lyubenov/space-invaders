@@ -1,51 +1,5 @@
-import { AddPlayerLife } from "../addObjects/addPlayerLife";
-import { IGameRestart, IGameStart } from "../models/buttons";
-
-const startGame = document.querySelector(".start-game")! as HTMLDivElement;
-
-// collision detector
-export function isCollision(
-  firstElement: HTMLDivElement,
-  secondElement: HTMLDivElement
-) {
-  let firstRect = firstElement.getBoundingClientRect();
-  let secondRect = secondElement.getBoundingClientRect();
-
-  return !(
-    firstRect.top > secondRect.bottom ||
-    firstRect.bottom < secondRect.top ||
-    firstRect.right < secondRect.left ||
-    firstRect.left > secondRect.right
-  );
-}
-
-// start game
-export function onGameStart({
-  gameAction,
-  player,
-  game,
-  AddAlienCluster,
-  AddShields,
-  sounds,
-  AddDefender,
-}: IGameStart) {
-  startGame.classList.add("hidden");
-  const defenderInstance = new AddDefender(player);
-  const defender = defenderInstance.defender;
-
-  player.height = defender.offsetHeight;
-  player.width = defender.offsetWidth;
-
-  new AddAlienCluster(game);
-  new AddShields();
-  sounds.backgroundMusic.play();
-
-  for (let i = 0; i < 3; i++) {
-    new AddPlayerLife();
-  }
-
-  window.requestAnimationFrame(gameAction);
-}
+import { IGameRestart } from "../models/buttons";
+import { onGameStart } from "./startGame";
 
 // restat game option
 export function gameRestart({

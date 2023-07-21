@@ -18,13 +18,15 @@ import {
 import { pointsUpdate } from "./points/pointsUpdate";
 import { respawnAliens } from "./respwan/aliens";
 import { sounds } from "./sounds/sounds";
-import { onGameStart, gameRestart, isCollision } from "./util/utilityFuncs";
 import { alienFiringCycle } from "./alienFiringCycle/alienFiringCycle";
 import { mothershipMovement } from "./objectMovement/mothership";
 import { AddAlienCluster } from "./addObjects/addAlienCluster";
 import { AddShields } from "./addObjects/addShields";
 import { AddDefender } from "./addObjects/addDefender";
 import { IGameRestart, IGameStart } from "./models/buttons";
+import { isCollision } from "./util/isCollision";
+import { onGameStart } from "./util/startGame";
+import { gameRestart } from "./util/gameRestart";
 
 const startButton = document.querySelector(".start-button")! as HTMLDivElement;
 let gameArea = document.querySelector(".game-area")! as HTMLDivElement;
@@ -36,8 +38,6 @@ sounds.backgroundMusic.addEventListener("ended", function () {
   this.currentTime = 0;
   this.play();
 });
-
-const test = AddAlienLazerShot;
 
 // done to reduce types and easy of adding new parameters to the gameAction
 const gameActionAssetsConfigObject = {
