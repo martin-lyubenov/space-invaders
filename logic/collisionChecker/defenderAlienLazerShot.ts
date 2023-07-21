@@ -26,7 +26,7 @@ export function defenderAlienLazerShotCollisionChecker(
   // checks for collision between the defender and an alien attack
   if (isCollision(defender, alienLazerShot)) {
     // sellects the remaining lives
-    let lives = document.querySelectorAll(".one-live");
+    let lives = document.querySelectorAll(".one-life");
     // removes the alien attack form the game screen
     alienLazerShot.remove();
     // if the players still has lives one is removed and the position of the defender is reset to the starting one

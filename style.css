@@ -151,7 +151,7 @@ body {
 }
 
 
-.one-live { 
+.one-life { 
     width: 75px;
     height: 35px;
     background-image: url(./images/defender/defender.jpg);
@@ -278,7 +278,7 @@ body {
         height: 87vh;
     }
 
-    .one-live { 
+    .one-life { 
         width: 50px;
         height: 25px;
     }

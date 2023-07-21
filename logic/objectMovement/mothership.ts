@@ -1,6 +1,7 @@
 import { IGameObject } from "../models/generalInfo";
 
-// TODO must fix problem with mothership sound
+// logic for moving the mothership on the game screen
+
 export function mothershipMovement({
   game,
   mothershipCurrentSound,
@@ -8,18 +9,23 @@ export function mothershipMovement({
   game: IGameObject;
   mothershipCurrentSound: HTMLAudioElement;
 }) {
-  let motherships = document.querySelectorAll(
+  // selects all mothership HTML div elements on the screen and stores them in an array
+  const motherships = document.querySelectorAll(
     ".mothership"
   ) as NodeListOf<HTMLDivElement>;
 
+  // loops through the motherships ( there is usually only one)
   motherships.forEach((mothership) => {
+    //moves the mothership on the game screen
     mothership.x -= game.speed;
     mothership.style.left = mothership.x + "px";
 
+    // if the mothership is alive add sound to the movement
     if (mothership.classList.contains("dead-alien") === false) {
       mothershipCurrentSound.play();
     }
 
+    // removes the mothership from the DOM if it reaches the end of the screen
     if (mothership.x + mothership.offsetWidth <= 0) {
       mothership.remove();
     }

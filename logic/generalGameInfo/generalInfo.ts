@@ -18,6 +18,7 @@ export let game: IGameObject = {
   mothershipSpawnInterval: 50000,
   mothershipMovementMultiplier: 5,
   maxAlienClusterSize: 55,
+  maxPlayerLives: 5,
 };
 
 // general state info about scene
