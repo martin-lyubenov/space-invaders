@@ -1,4 +1,1 @@
-Check if you can extend the HTMLdivElement interface in TS to remove the x does not exist error
-fix CSS for small sreens
-leave extensive notes in the  files
-add controlls for phones?
+This is not the file you are looking for ( waives hand); 
