@@ -1,4 +1,5 @@
 import { IPlayer } from "../models/player";
+import { player } from "../player/player";
 
 // logic for rendering the alien lazer attacks
 
@@ -11,13 +12,13 @@ export class AddDefenderLazerShot {
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
   lazerShot!: HTMLDivElement;
 
-  constructor(player: IPlayer) {
-    this.render(player);
+  constructor() {
+    this.render();
     this.config(player);
   }
 
   // creates a div element gives it the appropriate class for a defender lazer attack
-  private render(player: IPlayer) {
+  private render() {
     this.lazerShot = document.createElement("div");
     this.lazerShot.classList.add("lazer-shot");
   }

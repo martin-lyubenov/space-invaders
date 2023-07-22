@@ -1,8 +1,9 @@
 import { IPlayer } from "../models/player";
+import { player } from "../player/player";
 
 // logic for moving the mothership on the game screen
 
-export function playerMovement({ player }: { player: IPlayer }) {
+export function playerMovement() {
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
   const defender = document.querySelector(".defender")! as HTMLDivElement;
   //moves the mothership on the game screen

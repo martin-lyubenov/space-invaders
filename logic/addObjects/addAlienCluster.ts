@@ -1,3 +1,4 @@
+import { game } from "../generalGameInfo/generalInfo";
 import { IGameObject } from "../models/generalInfo";
 
 // logic for rendering the alien cluster capsulated in a single module with 2 classes
@@ -28,7 +29,7 @@ export class AddAlienCluster {
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
   alienCluster!: HTMLDivElement;
 
-  constructor(game: IGameObject) {
+  constructor() {
     this.render(game);
     this.config();
   }

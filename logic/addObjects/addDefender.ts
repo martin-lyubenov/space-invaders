@@ -1,4 +1,5 @@
 import { IPlayer } from "../models/player";
+import { player } from "../player/player";
 // the HTML element will always exist this is why a non-null assertion operator (!) is used
 const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
@@ -10,7 +11,7 @@ export class AddDefender {
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
   defender!: HTMLDivElement;
 
-  constructor(player: IPlayer) {
+  constructor() {
     this.render(player);
     this.config();
   }

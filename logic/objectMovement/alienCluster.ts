@@ -1,14 +1,9 @@
+import { game } from "../generalGameInfo/generalInfo";
 import { IGameObject } from "../models/generalInfo";
 
 // logic for moving the alien cluster on the game screen
 
-export function alienClusterMovement({
-  game,
-  gameArea,
-}: {
-  game: IGameObject;
-  gameArea: HTMLDivElement;
-}) {
+export function alienClusterMovement(gameArea: HTMLDivElement) {
   // sellets the alien cluster HTML div element
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
   const alienCluster = document.querySelector(

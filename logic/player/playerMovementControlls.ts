@@ -1,6 +1,9 @@
+import { AddDefenderLazerShot } from "../addObjects/addDefenderLazerShot";
+import { game } from "../generalGameInfo/generalInfo";
 import { IGameObject } from "../models/generalInfo";
 import { IPlayer } from "../models/player";
-import { ISounds } from "../models/sounds";
+import { sounds } from "../sounds/sounds";
+import { player } from "./player";
 
 // logic for setting up the player controlls
 
@@ -23,15 +26,7 @@ function onKeyUp(e: KeyboardEvent) {
 }
 
 // movement controlls
-export function playerMovementControlls({
-  player,
-  game,
-  gameArea,
-}: {
-  player: IPlayer;
-  game: IGameObject;
-  gameArea: HTMLDivElement;
-}) {
+export function playerMovementControlls(gameArea: HTMLDivElement) {
   // if the player is pressing or holding the left arrow, move the player to the left
   if (keys.ArrowLeft && player.x > 0) {
     player.x -= game.speed * game.playerMovementMultiplier;
@@ -44,23 +39,10 @@ export function playerMovementControlls({
 }
 
 // shooting controlls
-export function playerShootingControlls(
-  {
-    player,
-    game,
-    sounds,
-    AddDefenderLazerShot,
-  }: {
-    player: IPlayer;
-    game: IGameObject;
-    sounds: ISounds;
-    AddDefenderLazerShot: any;
-  },
-  timestamp: number
-) {
+export function playerShootingControlls(timestamp: number) {
   // if the player is pressing the spacebar render a lazer attack and create the appropriate sound
   if (keys.Space && timestamp - player.lastTimeShot > game.fireInterval) {
-    new AddDefenderLazerShot(player);
+    new AddDefenderLazerShot();
     sounds.defenderShooting.play();
     player.lastTimeShot = timestamp;
   }

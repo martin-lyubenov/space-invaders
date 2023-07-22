@@ -1,17 +1,9 @@
 import { AddPlayerLife } from "../addObjects/addPlayerLife";
-import { IGameObject, ISceneObject } from "../models/generalInfo";
+import { game, scene } from "../generalGameInfo/generalInfo";
 
 // logic for updating the player points
 
-export function pointsUpdate({
-  points,
-  scene,
-  game,
-}: {
-  points: HTMLDivElement;
-  scene: ISceneObject;
-  game: IGameObject;
-}) {
+export function pointsUpdate(points: HTMLDivElement) {
   points.textContent = scene.score.toString();
 
   const lives = document.querySelectorAll(".one-life");

@@ -1,14 +1,8 @@
-import { IGameObject } from "../models/generalInfo";
+import { game } from "../generalGameInfo/generalInfo";
 
 // logic for moving the mothership on the game screen
 
-export function mothershipMovement({
-  game,
-  mothershipCurrentSound,
-}: {
-  game: IGameObject;
-  mothershipCurrentSound: HTMLAudioElement;
-}) {
+export function mothershipMovement(mothershipCurrentSound: HTMLAudioElement) {
   // selects all mothership HTML div elements on the screen and stores them in an array
   const motherships = document.querySelectorAll(
     ".mothership"

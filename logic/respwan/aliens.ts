@@ -1,10 +1,10 @@
-import { IGameObject } from "../models/generalInfo";
+import { game } from "../generalGameInfo/generalInfo";
 
 // logic for respwaning all the alien cluster once every alien is dead
 
 // dead aliens are still on the screen but are not visible to the player, nor can they be interacted with
 
-export function respawnAliens({ game }: { game: IGameObject }) {
+export function respawnAliens() {
   // selects all of the alien HTML Div elements and stores them in an array
   const aliens = document.querySelectorAll(
     ".alien"

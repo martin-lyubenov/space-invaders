@@ -1,15 +1,11 @@
+import { game } from "../generalGameInfo/generalInfo";
 import { IGameObject } from "../models/generalInfo";
 import { IIsCollision } from "../models/isCollision";
+import { isCollision } from "../util/isCollision";
 
 // logic for moving the defender attacks on the game screen
 
-export function lazerShotsMovement({
-  game,
-  isCollision,
-}: {
-  game: IGameObject;
-  isCollision: IIsCollision;
-}) {
+export function lazerShotsMovement() {
   // selects all of the defenders attacks and stores them in an array
   const lazerShots = document.querySelectorAll(
     ".lazer-shot"

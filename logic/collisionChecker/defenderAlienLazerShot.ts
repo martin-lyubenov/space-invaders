@@ -1,6 +1,6 @@
-import { ISceneObject } from "../models/generalInfo";
-import { IIsCollision } from "../models/isCollision";
-import { IPlayer } from "../models/player";
+import { scene } from "../generalGameInfo/generalInfo";
+import { player } from "../player/player";
+import { isCollision } from "../util/isCollision";
 
 // logic for checking if an alien has hit the defender
 
@@ -10,12 +10,9 @@ import { IPlayer } from "../models/player";
 // the name of the func is quite the mouthful I know
 export function defenderAlienLazerShotCollisionChecker(
   defender: HTMLDivElement,
-  isCollision: IIsCollision,
   alienLazerShot: HTMLDivElement,
-  player: IPlayer,
   gameArea: HTMLDivElement,
-  gameOver: HTMLDivElement,
-  scene: ISceneObject
+  gameOver: HTMLDivElement
 ) {
   // the func reveals the game over screen and stops the game until the player decides to restart
   function gameOverAction(gameOver: HTMLDivElement) {

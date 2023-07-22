@@ -1,6 +1,6 @@
-import { ISceneObject } from "../models/generalInfo";
-import { IIsCollision } from "../models/isCollision";
-import { ISounds } from "../models/sounds";
+import { scene } from "../generalGameInfo/generalInfo";
+import { sounds } from "../sounds/sounds";
+import { isCollision } from "../util/isCollision";
 
 // logic for checking if an alien has been hit. If yes, the alien is marked as "dead" and the player is awared points
 // how do we know if an alien is dead you ask ? -> logic is the following, we take the 2 HTML elements ( both are divs) and check if one has entered the position of the other using the getBoundingClientRect()
@@ -8,24 +8,16 @@ import { ISounds } from "../models/sounds";
 
 // dead aliens are still on the screen but are not visible to the player, nor can they be interacted with
 
-export function alienDeathAndPoints({
-  isCollision,
-  sounds,
-  scene,
-}: {
-  isCollision: IIsCollision;
-  sounds: ISounds;
-  scene: ISceneObject;
-}) {
+export function alienDeathAndPoints() {
   // selects all alien HTML div elements and stores them in an array
-  let aliens = document.querySelectorAll(
+  const aliens = document.querySelectorAll(
     ".alien"
   ) as NodeListOf<HTMLDivElement>;
 
   // loops through the alien array to check if any alien was hit
   aliens.forEach((alien) => {
     // selects all defender lazer attack HTML div elements and stores them in an array
-    let lazerShots = document.querySelectorAll(
+    const lazerShots = document.querySelectorAll(
       ".lazer-shot"
     ) as NodeListOf<HTMLDivElement>;
 

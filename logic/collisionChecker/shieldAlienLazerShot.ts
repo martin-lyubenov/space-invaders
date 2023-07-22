@@ -1,4 +1,5 @@
 import { IIsCollision } from "../models/isCollision";
+import { isCollision } from "../util/isCollision";
 
 // logic for checking if an alien has hit one of the defender's shields
 
@@ -7,8 +8,7 @@ import { IIsCollision } from "../models/isCollision";
 
 // the name of the func is quite the mouthful I know
 export function shieldAlienLazerShotCollisionChecker(
-  alienLazerShot: HTMLDivElement,
-  isCollision: IIsCollision
+  alienLazerShot: HTMLDivElement
 ) {
   // selects all of the shield HTML elements and stores them in an array
   let shields = document.querySelectorAll(

@@ -1,26 +1,16 @@
-import { IGameObject, ISceneObject } from "../models/generalInfo";
+import { AddAlienLazerShot } from "../addObjects/addAlienLazerShot";
+import { game, scene } from "../generalGameInfo/generalInfo";
 
 // logic for choosing when an alien should attack
 
-export function alienFiringCycle(
-  {
-    scene,
-    game,
-    AddAlienLazerShot,
-  }: {
-    scene: ISceneObject;
-    game: IGameObject;
-    AddAlienLazerShot: any; //TODO check why it would not accpet typeof AddAlienLazerShot
-  },
-  timestamp: number
-) {
+export function alienFiringCycle(timestamp: number) {
   // selects all alien HTML div elements and stores them in an array
   const aliens = document.querySelectorAll(".alien");
 
   // filters the dead aliens
   const remainingAliens = Array.from(aliens).filter(
     (alien) => alien.classList.contains("dead-alien") === false
-  );
+  ) as HTMLDivElement[];
   // picks a random postion to make sure a random alien fires every time
   const randomAlienPosition = Math.round(
     remainingAliens.length * Math.random()

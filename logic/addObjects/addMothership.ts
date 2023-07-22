@@ -1,4 +1,5 @@
 import { ISounds } from "../models/sounds";
+import { sounds } from "../sounds/sounds";
 
 // logic for rendering the alien mothership
 
@@ -12,7 +13,7 @@ export class AddMothership {
   mothership!: HTMLDivElement;
   mothershipCurrentSound!: HTMLAudioElement;
 
-  constructor(sounds: ISounds) {
+  constructor() {
     this.render();
     this.config(sounds);
   }

@@ -1,16 +1,11 @@
-import { AddAlienLazerShot } from "./addObjects/addAlienLazerShot";
-import { AddDefenderLazerShot } from "./addObjects/addDefenderLazerShot";
 import { AddMothership } from "./addObjects/addMothership";
 import { alienSpriteAnimation } from "./animations/alienSprites";
-import { defenderAlienLazerShotCollisionChecker } from "./collisionChecker/defenderAlienLazerShot";
-import { shieldAlienLazerShotCollisionChecker } from "./collisionChecker/shieldAlienLazerShot";
 import { alienDeathAndPoints } from "./alienDeathAndPoints/alienDeathAndPoints";
 import { game, scene } from "./generalGameInfo/generalInfo";
 import { alienClusterMovement } from "./objectMovement/alienCluster";
 import { alienLazerShotsMovmentAndCollisionChecker } from "./objectMovement/alienLazerShots";
 import { lazerShotsMovement } from "./objectMovement/lazerShots";
 import { playerMovement } from "./objectMovement/player";
-import { player } from "./player/player";
 import {
   playerMovementControlls,
   playerShootingControlls,
@@ -20,11 +15,7 @@ import { respawnAliens } from "./respwan/aliens";
 import { sounds } from "./sounds/sounds";
 import { alienFiringCycle } from "./alienFiringCycle/alienFiringCycle";
 import { mothershipMovement } from "./objectMovement/mothership";
-import { AddAlienCluster } from "./addObjects/addAlienCluster";
-import { AddShields } from "./addObjects/addShields";
-import { AddDefender } from "./addObjects/addDefender";
-import { IGameRestart, IGameStart } from "./models/buttons";
-import { isCollision } from "./util/isCollision";
+
 import { onGameStart } from "./util/startGame";
 import { gameRestart } from "./util/gameRestart";
 
@@ -40,126 +31,70 @@ sounds.backgroundMusic.addEventListener("ended", function () {
 });
 
 // done to reduce types and easy of adding new parameters to the gameAction
-const gameActionAssetsConfigObject = {
-  playerMovementControlls: { player, game, gameArea },
-  playerMovement: { player },
-  playerShootingControlls: { player, game, sounds, AddDefenderLazerShot },
-  lazerShotsMovement: { game, isCollision },
-  alienClusterMovement: { game, gameArea },
-  deathAndPoints: { isCollision, sounds, scene },
-  respawnAliens: { game },
-  alienSpriteAnimation: { scene, game },
-  alienLazerShotsMovmentAndCollisionChecker: {
-    game,
-    scene,
-    player,
-    gameArea,
-    isCollision,
-    defenderAlienLazerShotCollisionChecker,
-    shieldAlienLazerShotCollisionChecker,
-    gameOver,
-  },
-  alienFiringCycle: { scene, game, AddAlienLazerShot },
-  mothershipMovement: { game, mothershipCurrentSound: new Audio() },
-  pointsUpdate: { points, scene, game },
-};
-
-const gameButtonsConfigObj: {
-  onGameStart: IGameStart;
-  gameRestart: IGameRestart;
-} = {
-  onGameStart: {
-    gameAction,
-    player,
-    game,
-    AddDefender,
-    AddAlienCluster,
-    AddShields,
-    sounds,
-  },
-  gameRestart: {
-    gameArea,
-    gameOver,
-    player,
-    scene,
-    onGameStartConfigObj: {
-      gameAction,
-      player,
-      game,
-      AddDefender,
-      AddAlienCluster,
-      AddShields,
-      sounds,
-    },
-  },
-};
 
 // start game button event listener
 startButton.addEventListener("click", () => {
-  return onGameStart(gameButtonsConfigObj.onGameStart);
+  return onGameStart();
 });
 
 // game over and restart game event listener
 gameOver.addEventListener("click", () => {
-  return gameRestart(gameButtonsConfigObj.gameRestart);
+  return gameRestart(gameArea, gameOver);
 });
 
+let mothershipCurrentSound: HTMLAudioElement;
+
 // game engine
-function gameAction(timestamp: number) {
+export function gameAction(timestamp: number) {
+  // during each frame the engine checks the state of the game and updates the screen accordingly
+
   // movement keys
-  playerMovementControlls(gameActionAssetsConfigObject.playerMovementControlls);
+  playerMovementControlls(gameArea);
 
   // shooting
   playerShootingControlls(
-    gameActionAssetsConfigObject.playerShootingControlls,
-    timestamp //timestam must always be added as it comes from the gameAction func itself
+    timestamp //timestamp must always be added as it comes from the gameAction func itself
   );
 
   // apply player movement
-  playerMovement(gameActionAssetsConfigObject.playerMovement);
+  playerMovement();
 
   // add lazer movement
-  lazerShotsMovement(gameActionAssetsConfigObject.lazerShotsMovement);
+  lazerShotsMovement();
 
   // add alient cluster movement
-  alienClusterMovement(gameActionAssetsConfigObject.alienClusterMovement);
+  alienClusterMovement(gameArea);
 
   // alien death and points
-  alienDeathAndPoints(gameActionAssetsConfigObject.deathAndPoints);
+  alienDeathAndPoints();
 
   // respawn aliens
-  respawnAliens(gameActionAssetsConfigObject.respawnAliens);
+  respawnAliens();
 
   // aliens sprite animation
-  alienSpriteAnimation(
-    gameActionAssetsConfigObject.alienSpriteAnimation,
-    timestamp
-  );
+  alienSpriteAnimation(timestamp);
 
   // aliens firing back (in self defence)
-  alienFiringCycle(gameActionAssetsConfigObject.alienFiringCycle, timestamp);
+  alienFiringCycle(timestamp);
 
   // add movment and collision to alien lazer shots
-  alienLazerShotsMovmentAndCollisionChecker(
-    gameActionAssetsConfigObject.alienLazerShotsMovmentAndCollisionChecker,
-    timestamp
-  );
+  alienLazerShotsMovmentAndCollisionChecker(gameArea, gameOver, timestamp);
 
   // add mothership
   if (
     timestamp - scene.lastSpawnMothership >
     game.mothershipSpawnInterval + 50000 * Math.random()
   ) {
-    const mothership = new AddMothership(sounds);
-    gameActionAssetsConfigObject.mothershipMovement.mothershipCurrentSound =
-      mothership.mothershipCurrentSound;
+    const mothershipInstance = new AddMothership();
+    mothershipCurrentSound = mothershipInstance.mothershipCurrentSound;
     scene.lastSpawnMothership = timestamp;
   }
 
   // add mothership movement
-  mothershipMovement(gameActionAssetsConfigObject.mothershipMovement);
+  mothershipMovement(mothershipCurrentSound);
 
-  pointsUpdate(gameActionAssetsConfigObject.pointsUpdate);
+  // updates the points
+  pointsUpdate(points);
 
   if (scene.isActive) {
     window.requestAnimationFrame(gameAction);

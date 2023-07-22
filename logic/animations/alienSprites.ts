@@ -1,12 +1,10 @@
+import { game, scene } from "../generalGameInfo/generalInfo";
 import { IGameObject, ISceneObject } from "../models/generalInfo";
 
 // logic for animation the aliens
 // the way the aliens are animated is as follows -> each frame the game checks the background sprite and the sprite change interval ( located in the "game" object) and changes the sprite simulating movement
 
-export function alienSpriteAnimation(
-  { scene, game }: { scene: ISceneObject; game: IGameObject },
-  timestamp: number
-) {
+export function alienSpriteAnimation(timestamp: number) {
   // selects all alien HTML div elements and saves them in an array
   const aliens = document.querySelectorAll(
     ".alien"

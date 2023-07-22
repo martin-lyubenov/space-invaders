@@ -1,15 +1,14 @@
+import { scene } from "../generalGameInfo/generalInfo";
 import { IGameRestart } from "../models/buttons";
+import { player } from "../player/player";
 import { onGameStart } from "./startGame";
 
 // logic for restarting the game once the player has lost all of their lives
 
-export function gameRestart({
-  gameArea,
-  gameOver,
-  player,
-  scene,
-  onGameStartConfigObj,
-}: IGameRestart) {
+export function gameRestart(
+  gameArea: HTMLDivElement,
+  gameOver: HTMLDivElement
+) {
   // hides the game over screen
   gameOver.classList.add("hidden");
 
@@ -63,5 +62,5 @@ export function gameRestart({
   scene.isActive = true;
 
   // runs the start game function so the game can start again
-  onGameStart(onGameStartConfigObj);
+  onGameStart();
 }

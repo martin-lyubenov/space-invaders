@@ -1,14 +1,12 @@
-import { IGameObject, ISceneObject } from "../models/generalInfo";
+import { game, scene } from "../generalGameInfo/generalInfo";
 
 // logic for animating the alien lazer attack
 // the way the attacks are animated is as follows -> each frame the game checks the background spire and the sprite change interval ( located in the "game" object) and changes the sprite simulating movement
 
 export function alienLazerShotSprites(
   timestamp: number,
-  scene: ISceneObject,
-  game: IGameObject,
   alienLazerShot: HTMLDivElement
-): void {
+) {
   if (
     timestamp - scene.lastAlienLazerShotSpriteInterval >
     game.alienLazerShotSpriteChangeInterval
