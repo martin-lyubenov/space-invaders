@@ -2,7 +2,7 @@ const CleanPlugin = require("clean-webpack-plugin");
 const path = require("path");
 
 module.exports = {
-  mode: "production", // tells Webpack that we are working in development, to be adjusted when you switch to production
+  mode: "production", // tells Webpack that we are working in production
   entry: "./logic/main.ts", // first file to check
   output: {
     // where the final code should be stored

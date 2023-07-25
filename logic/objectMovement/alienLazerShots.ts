@@ -16,7 +16,7 @@ export function alienLazerShotsMovmentAndCollisionChecker(
   // selects all alien attack HTML Div elements
   let alienLazerShots = document.querySelectorAll(
     ".alien-lazer-shot"
-  ) as NodeListOf<HTMLDivElement>;
+  ) as NodeListOf<any>;
 
   // loops through the alien attacks
   alienLazerShots.forEach((alienLazerShot) => {

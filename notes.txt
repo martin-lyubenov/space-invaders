@@ -1,1 +1,4 @@
 This is not the file you are looking for ( waives hand); 
+
+check why TS does not see the x property on the HTML div element
+To sovlve the all HTML div elements are currently replaced with the any type but this is not a great solution

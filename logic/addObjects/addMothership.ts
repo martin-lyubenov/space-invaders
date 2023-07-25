@@ -10,7 +10,9 @@ const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 // additionally each instance contains reference to the html div element the Mothership is render into
 export class AddMothership {
   // the HTML elements will always exist this is why a non-null assertion operator (!) is used
-  mothership!: HTMLDivElement;
+  // additionally TS had some time issue with the X and Y properties on the Div HTML element so the element was converted to any
+
+  mothership!: any;
   mothershipCurrentSound!: HTMLAudioElement;
 
   constructor() {

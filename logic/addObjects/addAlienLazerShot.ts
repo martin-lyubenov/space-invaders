@@ -1,4 +1,4 @@
-  // the HTML element will always exist this is why a non-null assertion operator (!) is used
+// the HTML element will always exist this is why a non-null assertion operator (!) is used
 const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 
 // logic for rendering the alien lazer attacks
@@ -7,7 +7,8 @@ const gameArea = document.querySelector(".game-area")! as HTMLDivElement;
 // additionally each instance contains reference to the html div element the lazer is render into
 export class AddAlienLazerShot {
   // the HTML element will always exist this is why a non-null assertion operator (!) is used
-  alienLazerShot!: HTMLDivElement;
+  // additionally TS had some time issue with the X and Y properties on the Div HTML element so the element was converted to any
+  alienLazerShot!: any;
 
   constructor(alien: HTMLDivElement) {
     this.render(alien);

@@ -6,7 +6,7 @@ export function mothershipMovement(mothershipCurrentSound: HTMLAudioElement) {
   // selects all mothership HTML div elements on the screen and stores them in an array
   const motherships = document.querySelectorAll(
     ".mothership"
-  ) as NodeListOf<HTMLDivElement>;
+  ) as NodeListOf<any>;
 
   // loops through the motherships ( there is usually only one)
   motherships.forEach((mothership) => {

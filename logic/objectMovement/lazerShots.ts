@@ -9,7 +9,7 @@ export function lazerShotsMovement() {
   // selects all of the defenders attacks and stores them in an array
   const lazerShots = document.querySelectorAll(
     ".lazer-shot"
-  ) as NodeListOf<HTMLDivElement>;
+  ) as NodeListOf<any>;
 
   //loops through the attacks
   lazerShots.forEach((lazerShot) => {

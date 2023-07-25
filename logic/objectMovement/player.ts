@@ -1,4 +1,3 @@
-import { IPlayer } from "../models/player";
 import { player } from "../player/player";
 
 // logic for moving the mothership on the game screen
