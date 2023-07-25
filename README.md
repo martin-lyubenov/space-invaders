@@ -6,7 +6,7 @@ Dear viewer,
 
 This is a recreation of the all time classic arcade game Space Invaders. It was made using purely HTML, CSS and plain JS ( with TS) and bundled with Webpack.
 
-Feel free to try it out here -> https://github.com/martin-lyubenov/space-invaders
+Feel free to try it out here -> https://martin-lyubenov.github.io/space-invaders/
 
 What it can do:
 
